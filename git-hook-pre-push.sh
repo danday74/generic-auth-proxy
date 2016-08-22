@@ -15,7 +15,6 @@ echo -e "pre-push: Executing pre-push git hook";
 echo -e "pre-push: Before pushing lets try building ..";
 echo;
 
-cd investigator-ui; # Remove if investigator-ui put in own repo
 npm run build -s;
 if [ $? -eq 0 ]; then
     build=true;
