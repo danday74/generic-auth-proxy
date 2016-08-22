@@ -1,0 +1,22 @@
+[
+  {
+    "book_name": "Psalms",
+    "book_id": "Ps",
+    "book_order": "19",
+    "chapter_id": "117",
+    "chapter_title": "Chapter 117",
+    "verse_id": "1",
+    "verse_text": "O praise the LORD, all ye nations: praise him, all ye people. \n\t\t\t",
+    "paragraph_number": "577"
+  },
+  {
+    "book_name": "Psalms",
+    "book_id": "Ps",
+    "book_order": "19",
+    "chapter_id": "117",
+    "chapter_title": "Chapter 117",
+    "verse_id": "2",
+    "verse_text": "For his merciful kindness is great toward us: and the truth of the LORD endureth for ever. Praise ye the LORD. \n\t\t\n\t\t",
+    "paragraph_number": "577"
+  }
+]

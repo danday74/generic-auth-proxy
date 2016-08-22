@@ -1,0 +1,36 @@
+[
+  [
+    {
+      "total_results": "3"
+    }
+  ],
+  [
+    {
+      "dam_id": "ENGKJVN2ET",
+      "book_name": "John",
+      "book_id": "John",
+      "chapter_id": "3",
+      "verse_id": "16",
+      "verse_text": "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life. \n\t\t\t",
+      "book_order": "58"
+    },
+    {
+      "dam_id": "ENGKJVN2ET",
+      "book_name": "Ephesians",
+      "book_id": "Eph",
+      "chapter_id": "5",
+      "verse_id": "25",
+      "verse_text": "Husbands, love your wives, even as Christ also loved the church, and gave himself for it; \n\t\t\t",
+      "book_order": "64"
+    },
+    {
+      "dam_id": "ENGKJVN2ET",
+      "book_name": "1 John",
+      "book_id": "1John",
+      "chapter_id": "4",
+      "verse_id": "11",
+      "verse_text": "Beloved, if God so loved us, we ought also to love one another. \n\t\t\t",
+      "book_order": "77"
+    }
+  ]
+]

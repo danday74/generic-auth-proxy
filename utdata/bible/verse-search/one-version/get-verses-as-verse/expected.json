@@ -1,0 +1,27 @@
+{
+  "type": "verse",
+  "subType": "verse",
+  "ref": "Psalms 119:3",
+  "book": {
+    "id": "Ps",
+    "name": "Psalms"
+  },
+  "chapter": 119,
+  "verseStart": 3,
+  "verseEnd": 3,
+  "results": [
+    {
+      "ref": "Psalms 119:3 KJV",
+      "refEnhanced": "Psalms 119:3 <abbr title=\"King James Version\">KJV</abbr>",
+      "version": {
+        "ref": "KJV",
+        "name": "King James Version"
+      },
+      "text": "They also do no iniquity: they walk in his ways.",
+      "textEnhanced": "They also do no iniquity: they walk in his ways.",
+      "texts": [
+        "They also do no iniquity: they walk in his ways."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "type": "verse",
+  "subType": "verse",
+  "ref": "Psalms 118:2",
+  "book": {
+    "id": "Ps",
+    "name": "Psalms"
+  },
+  "chapter": 118,
+  "verseStart": 2,
+  "verseEnd": 2,
+  "results": [
+    {
+      "ref": "Psalms 118:2 KJV",
+      "refEnhanced": "Psalms 118:2 <abbr title=\"King James Version\">KJV</abbr>",
+      "version": {
+        "ref": "KJV",
+        "name": "King James Version"
+      },
+      "text": "Let Israel now say, that his mercy endureth for ever.",
+      "textEnhanced": "Let Israel now say, that his mercy endureth for ever.",
+      "texts": [
+        "Let Israel now say, that his mercy endureth for ever."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "name": "bible-api-dbt-server",
+  "version": "1.0.0",
+  "description": "Bible API server that relies on the Digital Bible Toolkit from www.digitalbibleplatform.com",
+  "main": "server.js",
+  "author": "Daniel Lewis BSc(Hons)",
+  "private": true,
+  "scripts": {
+    "preinstall": "npm list -g nodemon || npm i -g nodemon",
+    "postinstall": "test -d .git && cp git-hook-pre-push.sh .git/hooks/pre-push || true",
+    "start": "nodemon server.js",
+    "test": "cross-env NODE_ENV=test ./node_modules/.bin/istanbul cover -x \"**/*.spec.js\" ./node_modules/mocha/bin/_mocha -- routes --recursive -R spec",
+    "enforcer": "./node_modules/.bin/istanbul check-coverage --statement 100 --branch 100 --function 100 --line 100",
+    "build": "npm-run-all test enforcer",
+    "ncu": "ncu"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.1",
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "express-validation": "^1.0.0",
+    "joi": "^9.0.4",
+    "lodash": "^4.14.2",
+    "request": "^2.74.0",
+    "request-promise": "^4.1.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "cross-env": "^2.0.0",
+    "data-driven": "^1.2.1",
+    "eslint": "^3.1.1",
+    "istanbul": "^0.4.4",
+    "mocha": "^3.0.2",
+    "nock": "^8.0.0",
+    "npm-check-updates": "^2.7.2",
+    "npm-run-all": "^3.0.0",
+    "supertest": "^2.0.0"
+  }
+}

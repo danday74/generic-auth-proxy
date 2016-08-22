@@ -1,0 +1,27 @@
+{
+  "type": "verse",
+  "subType": "verse",
+  "ref": "Psalms 119:176",
+  "book": {
+    "id": "Ps",
+    "name": "Psalms"
+  },
+  "chapter": 119,
+  "verseStart": 176,
+  "verseEnd": 176,
+  "results": [
+    {
+      "ref": "Psalms 119:176 KJV",
+      "refEnhanced": "Psalms 119:176 <abbr title=\"King James Version\">KJV</abbr>",
+      "version": {
+        "ref": "KJV",
+        "name": "King James Version"
+      },
+      "text": "I have gone astray like a lost sheep; seek thy servant; for I do not forget thy commandments.",
+      "textEnhanced": "I have gone astray like a lost sheep; seek thy servant; for I do not forget thy commandments.",
+      "texts": [
+        "I have gone astray like a lost sheep; seek thy servant; for I do not forget thy commandments."
+      ]
+    }
+  ]
+}

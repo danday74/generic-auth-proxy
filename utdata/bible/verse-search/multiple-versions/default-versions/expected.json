@@ -1,0 +1,66 @@
+{
+  "type": "verse",
+  "subType": "verse",
+  "ref": "Genesis 1:2",
+  "book": {
+    "id": "Gen",
+    "name": "Genesis"
+  },
+  "chapter": 1,
+  "verseStart": 2,
+  "verseEnd": 2,
+  "results": [
+    {
+      "ref": "Genesis 1:2 ESV",
+      "refEnhanced": "Genesis 1:2 <abbr title=\"English Standard Version\">ESV</abbr>",
+      "version": {
+        "ref": "ESV",
+        "name": "English Standard Version"
+      },
+      "text": "The earth was without form and void, and darkness was over the face of the deep. And the Spirit of God was hovering over the face of the waters.",
+      "textEnhanced": "The earth was without form and void, and darkness was over the face of the deep. And the Spirit of God was hovering over the face of the waters.",
+      "texts": [
+        "The earth was without form and void, and darkness was over the face of the deep. And the Spirit of God was hovering over the face of the waters."
+      ]
+    },
+    {
+      "ref": "Genesis 1:2 WEB",
+      "refEnhanced": "Genesis 1:2 <abbr title=\"World English Bible\">WEB</abbr>",
+      "version": {
+        "ref": "WEB",
+        "name": "World English Bible"
+      },
+      "text": "The earth was formless and empty. Darkness was on the surface of the deep and God\u2019s Spirit was hovering over the surface of the waters.",
+      "textEnhanced": "The earth was formless and empty. Darkness was on the surface of the deep and God\u2019s Spirit was hovering over the surface of the waters.",
+      "texts": [
+        "The earth was formless and empty. Darkness was on the surface of the deep and God\u2019s Spirit was hovering over the surface of the waters."
+      ]
+    },
+    {
+      "ref": "Genesis 1:2 NASB",
+      "refEnhanced": "Genesis 1:2 <abbr title=\"New American Standard Bible\">NASB</abbr>",
+      "version": {
+        "ref": "NASB",
+        "name": "New American Standard Bible"
+      },
+      "text": "The earth was formless and void, and darkness was over the surface of the deep, and the Spirit of God was moving over the surface of the waters.",
+      "textEnhanced": "The earth was formless and void, and darkness was over the surface of the deep, and the Spirit of God was moving over the surface of the waters.",
+      "texts": [
+        "The earth was formless and void, and darkness was over the surface of the deep, and the Spirit of God was moving over the surface of the waters."
+      ]
+    },
+    {
+      "ref": "Genesis 1:2 KJV",
+      "refEnhanced": "Genesis 1:2 <abbr title=\"King James Version\">KJV</abbr>",
+      "version": {
+        "ref": "KJV",
+        "name": "King James Version"
+      },
+      "text": "And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters.",
+      "textEnhanced": "And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters.",
+      "texts": [
+        "And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters."
+      ]
+    }
+  ]
+}

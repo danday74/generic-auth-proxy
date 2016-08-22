@@ -1,0 +1,73 @@
+{
+	"variables": [],
+	"info": {
+		"name": "bible-api-dbt-server",
+		"_postman_id": "3b17ffed-73a1-836a-13ab-2e12a8bf8c54",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Free text search",
+			"request": {
+				"url": "http://localhost:52922/bible?q=beautiful are the feet of those who preach&versions=esv,web,nasb,kjv",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Chapter",
+			"request": {
+				"url": "http://localhost:52922/bible?q=John 3&versions=esv,web,nasb,kjv",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Verse",
+			"request": {
+				"url": "http://localhost:52922/bible?q=John 3:16&versions=esv,web,nasb,kjv",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Verses",
+			"request": {
+				"url": "http://localhost:52922/bible?q=John 3:16-18&versions=esv,web,nasb,kjv",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

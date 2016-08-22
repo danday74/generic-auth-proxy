@@ -1,0 +1,22 @@
+[
+  {
+    "book_name": "Psalms",
+    "book_id": "Ps",
+    "book_order": "19",
+    "chapter_id": "119",
+    "chapter_title": "Chapter 119",
+    "verse_id": "2",
+    "verse_text": "Blessed are those who keep his testimonies, who seek him with their whole heart, \n\t\t\t",
+    "paragraph_number": "579"
+  },
+  {
+    "book_name": "Psalms",
+    "book_id": "Ps",
+    "book_order": "19",
+    "chapter_id": "119",
+    "chapter_title": "Chapter 119",
+    "verse_id": "3",
+    "verse_text": "who also do no wrong, but walk in his ways! \n\t\t\t",
+    "paragraph_number": "579"
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "type": "verse",
+  "subType": "chapter",
+  "ref": "Psalms 117",
+  "book": {
+    "id": "Ps",
+    "name": "Psalms"
+  },
+  "chapter": 117,
+  "verseStart": 1,
+  "verseEnd": 2,
+  "results": [
+    {
+      "ref": "Psalms 117 KJV",
+      "refEnhanced": "Psalms 117 <abbr title=\"King James Version\">KJV</abbr>",
+      "version": {
+        "ref": "KJV",
+        "name": "King James Version"
+      },
+      "text": "O praise the LORD, all ye nations: praise him, all ye people. For his merciful kindness is great toward us: and the truth of the LORD endureth for ever. Praise ye the LORD.",
+      "textEnhanced": "<sup>1</sup>O praise the LORD, all ye nations: praise him, all ye people. <sup>2</sup>For his merciful kindness is great toward us: and the truth of the LORD endureth for ever. Praise ye the LORD.",
+      "texts": [
+        "O praise the LORD, all ye nations: praise him, all ye people.",
+        "For his merciful kindness is great toward us: and the truth of the LORD endureth for ever. Praise ye the LORD."
+      ]
+    }
+  ]
+}
