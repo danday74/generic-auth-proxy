@@ -1,4 +1,4 @@
-let BibleHelper = require('./BibleHelper');
+let BibleHelper = require('../classes/BibleHelper');
 
 class SearchResponseResult {
 

@@ -1,4 +1,4 @@
-let config = require('../server.config');
+const config = require('../server.config');
 
 let middleware = (req, res, next) => {
   /* istanbul ignore next */

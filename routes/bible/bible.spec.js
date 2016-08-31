@@ -442,7 +442,7 @@ describe('bible', () => {
 
         let nockDefaultVersionsESV, nockDefaultVersionsWEB, nockDefaultVersionsNASB, nockDefaultVersionsKJV;
 
-        // noinspection ES6ModulesDependencies
+        // noinspection ES6ModulesDependencies, NodeModulesDependencies
         beforeEach(() => {
 
           nockDefaultVersionsESV = nock(config.proxy)
