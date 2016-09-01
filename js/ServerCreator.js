@@ -16,7 +16,6 @@ class ServerCreator {
   createHttpsServer(certDir) {
 
     if (!certDir) {
-      console.log('No certs');
       return undefined;
     }
 
@@ -28,8 +27,8 @@ class ServerCreator {
       };
       return https.createServer(options, this.app);
     } catch (err) {
+      /* istanbul ignore else */
       if (err.code === 'ENOENT') {
-        console.log(`No certs at ${certDir}`);
         return undefined;
       } else {
         throw err;
