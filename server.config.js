@@ -1,6 +1,7 @@
 let config = {
   logging: !(process.env.NODE_ENV === 'test'),
-  port: 52922,
+  httpPort: 52922,
+  httpsPort: 52923,
   providers: {
     digitalBibleToolkit: {
       endpoint: 'http://dbt.io/text',
@@ -12,6 +13,12 @@ let config = {
   timeout: {
     upstream: 9000
   }
+};
+
+/* istanbul ignore next */
+config.nock = {
+  url: config.proxy || 'http://dbt.io',
+  pre: (config.proxy) ? 'http://dbt.io' : '' // path prefix
 };
 
 module.exports = config;

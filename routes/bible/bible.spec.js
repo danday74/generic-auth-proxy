@@ -4,7 +4,7 @@ const expect = chai.expect;
 const supertest = require('supertest');
 const agent = supertest.agent(server);
 const nock = require('nock');
-const config = require('../../server.config');
+const cfg = require('../../server.config');
 
 const using = require('data-driven');
 
@@ -86,8 +86,8 @@ describe('bible', () => {
         ];
         expect(books).to.have.length(66);
 
-        let nocker = nock(config.proxy)
-          .get('http://dbt.io/text/verse')
+        let nocker = nock(cfg.nock.url)
+          .get(`${cfg.nock.pre}/text/verse`)
           .times(66)
           .query((query) => {
             return query['dam_id'] === 'ENGKJVO2ET' || query['dam_id'] === 'ENGKJVN2ET';
@@ -123,8 +123,8 @@ describe('bible', () => {
 
         let nocker;
         let initNock = (socketDelay) => {
-          nocker = nock(config.proxy)
-            .get('http://dbt.io/text/verse')
+          nocker = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/verse`)
             .query((query) => {
               return query['dam_id'] === 'ENGKJVO2ET';
             })
@@ -133,7 +133,7 @@ describe('bible', () => {
         };
 
         it('should not timeout', (done) => {
-          initNock(config.timeout.upstream - 1000);
+          initNock(cfg.timeout.upstream - 1000);
           agent
             .get('/bible?q=Psalms 117&versions=kjv')
             .expect(200, chapterExpected, (err) => {
@@ -143,7 +143,7 @@ describe('bible', () => {
         });
 
         it('should respond 408 on timeout', (done) => {
-          initNock(config.timeout.upstream + 1000);
+          initNock(cfg.timeout.upstream + 1000);
           agent
             .get('/bible?q=Psalms 117&versions=kjv')
             .expect(408, (err) => {
@@ -158,8 +158,8 @@ describe('bible', () => {
 
         it('should respond 502 where upstream response is non 2XX', (done) => {
 
-          let nocker = nock(config.proxy)
-            .get('http://dbt.io/text/verse')
+          let nocker = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/verse`)
             .query((query) => {
               return query['dam_id'] === 'ENGKJVO2ET';
             })
@@ -175,8 +175,8 @@ describe('bible', () => {
 
         it('should respond 502 where upstream errors', (done) => {
 
-          let nocker = nock(config.proxy)
-            .get('http://dbt.io/text/verse')
+          let nocker = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/verse`)
             .query((query) => {
               return query['dam_id'] === 'ENGKJVO2ET';
             })
@@ -232,8 +232,8 @@ describe('bible', () => {
 
         let nocker;
         let initNock = (response) => {
-          nocker = nock(config.proxy)
-            .get('http://dbt.io/text/verse')
+          nocker = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/verse`)
             .query((query) => {
               return query['dam_id'] === 'ENGKJVO2ET';
             })
@@ -269,8 +269,8 @@ describe('bible', () => {
 
         it('should be case insensitive', (done) => {
 
-          let nocker = nock(config.proxy)
-            .get('http://dbt.io/text/verse')
+          let nocker = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/verse`)
             .times(2)
             .query((query) => {
               return query['dam_id'] === 'ENGKJVO2ET';
@@ -296,8 +296,8 @@ describe('bible', () => {
 
         it('should record "verse" as subtype for a "verses" search where "from verse" equals "to verse"', (done) => {
 
-          let nocker = nock(config.proxy)
-            .get('http://dbt.io/text/verse')
+          let nocker = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/verse`)
             .query((query) => {
               return query['dam_id'] === 'ENGKJVO2ET';
             })
@@ -314,8 +314,8 @@ describe('bible', () => {
 
         it('should record "verse" as subtype for a "verses" search where "from verse" is the last verse in the chapter', (done) => {
 
-          let nocker = nock(config.proxy)
-            .get('http://dbt.io/text/verse')
+          let nocker = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/verse`)
             .query((query) => {
               return query['dam_id'] === 'ENGKJVO2ET';
             })
@@ -335,8 +335,8 @@ describe('bible', () => {
           let verseStart = 3;
           let verseEnd = 2;
 
-          let nocker = nock(config.proxy)
-            .get('http://dbt.io/text/verse')
+          let nocker = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/verse`)
             .query((query) => {
               return query['dam_id'] === 'ENGKJVO2ET'
                 && parseInt(query['verse_start']) === verseEnd
@@ -384,15 +384,15 @@ describe('bible', () => {
         let nocker1;
         let nocker2;
         let initNock = (responses) => {
-          nocker1 = nock(config.proxy)
-            .get('http://dbt.io/text/verse')
+          nocker1 = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/verse`)
             .query((query) => {
               return query['dam_id'] === 'ENGKJVO2ET';
             })
             .reply(200, responses[0]);
 
-          nocker2 = nock(config.proxy)
-            .get('http://dbt.io/text/verse')
+          nocker2 = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/verse`)
             .query((query) => {
               return query['dam_id'] === 'ENGESVO2ET';
             })
@@ -445,29 +445,29 @@ describe('bible', () => {
         // noinspection ES6ModulesDependencies, NodeModulesDependencies
         beforeEach(() => {
 
-          nockDefaultVersionsESV = nock(config.proxy)
-            .get('http://dbt.io/text/verse')
+          nockDefaultVersionsESV = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/verse`)
             .query((query) => {
               return query['dam_id'] === 'ENGESVO2ET';
             })
             .reply(200, defaultVersionsDbtResponseESV);
 
-          nockDefaultVersionsWEB = nock(config.proxy)
-            .get('http://dbt.io/text/verse')
+          nockDefaultVersionsWEB = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/verse`)
             .query((query) => {
               return query['dam_id'] === 'ENGWEBO2ET';
             })
             .reply(200, defaultVersionsDbtResponseWEB);
 
-          nockDefaultVersionsNASB = nock(config.proxy)
-            .get('http://dbt.io/text/verse')
+          nockDefaultVersionsNASB = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/verse`)
             .query((query) => {
               return query['dam_id'] === 'ENGNASO2ET';
             })
             .reply(200, defaultVersionsDbtResponseNASB);
 
-          nockDefaultVersionsKJV = nock(config.proxy)
-            .get('http://dbt.io/text/verse')
+          nockDefaultVersionsKJV = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/verse`)
             .query((query) => {
               return query['dam_id'] === 'ENGKJVO2ET';
             })
@@ -503,22 +503,22 @@ describe('bible', () => {
 
         it('should respect version ordering and ignore invalid versions', (done) => {
 
-          let nockVersionOrderingNASB = nock(config.proxy)
-            .get('http://dbt.io/text/verse')
+          let nockVersionOrderingNASB = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/verse`)
             .query((query) => {
               return query['dam_id'] === 'ENGNASO2ET';
             })
             .reply(200, versionOrderingDbtResponseNASB);
 
-          let nockVersionOrderingKJV = nock(config.proxy)
-            .get('http://dbt.io/text/verse')
+          let nockVersionOrderingKJV = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/verse`)
             .query((query) => {
               return query['dam_id'] === 'ENGKJVO2ET';
             })
             .reply(200, versionOrderingDbtResponseKJV);
 
-          let nockVersionOrderingWEB = nock(config.proxy)
-            .get('http://dbt.io/text/verse')
+          let nockVersionOrderingWEB = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/verse`)
             .query((query) => {
               return query['dam_id'] === 'ENGWEBO2ET';
             })
@@ -550,8 +550,8 @@ describe('bible', () => {
 
         let nocker;
         let initNock = (socketDelay) => {
-          nocker = nock(config.proxy)
-            .get('http://dbt.io/text/search')
+          nocker = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/search`)
             .query((query) => {
               return query['dam_id'] === 'ENGKJVO2';
             })
@@ -560,7 +560,7 @@ describe('bible', () => {
         };
 
         it('should not timeout', (done) => {
-          initNock(config.timeout.upstream - 1000);
+          initNock(cfg.timeout.upstream - 1000);
           agent
             .get('/bible?q=For God so|so loved&versions=kjv')
             .expect(200, freeTextExpected, (err) => {
@@ -570,7 +570,7 @@ describe('bible', () => {
         });
 
         it('should respond 408 on timeout', (done) => {
-          initNock(config.timeout.upstream + 1000);
+          initNock(cfg.timeout.upstream + 1000);
           agent
             .get('/bible?q=For God so|so loved&versions=kjv')
             .expect(408, (err) => {
@@ -585,8 +585,8 @@ describe('bible', () => {
 
         it('should respond 502 where upstream response is non 2XX', (done) => {
 
-          let nocker = nock(config.proxy)
-            .get('http://dbt.io/text/search')
+          let nocker = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/search`)
             .query((query) => {
               return query['dam_id'] === 'ENGKJVO2';
             })
@@ -602,8 +602,8 @@ describe('bible', () => {
 
         it('should respond 502 where upstream errors', (done) => {
 
-          let nocker = nock(config.proxy)
-            .get('http://dbt.io/text/search')
+          let nocker = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/search`)
             .query((query) => {
               return query['dam_id'] === 'ENGKJVO2';
             })
@@ -645,8 +645,8 @@ describe('bible', () => {
 
         let nocker;
         let initNock = (response) => {
-          nocker = nock(config.proxy)
-            .get('http://dbt.io/text/search')
+          nocker = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/search`)
             .query((query) => {
               return query['dam_id'] === 'ENGKJVO2';
             })
@@ -691,8 +691,8 @@ describe('bible', () => {
           let myFreeTextExpectedQuery2 = freeTextExpected;
           myFreeTextExpectedQuery2.query = 'FOR GOD SO|SO LOVED';
 
-          let nocker = nock(config.proxy)
-            .get('http://dbt.io/text/search')
+          let nocker = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/search`)
             .times(2)
             .query((query) => {
               return query['dam_id'] === 'ENGKJVO2';
@@ -741,14 +741,14 @@ describe('bible', () => {
         let nocker1;
         let nocker2;
         let initNock = (responses) => {
-          nocker1 = nock(config.proxy)
-            .get('http://dbt.io/text/search')
+          nocker1 = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/search`)
             .query((query) => {
               return query['dam_id'] === 'ENGKJVO2';
             })
             .reply(200, responses[0]);
-          nocker2 = nock(config.proxy)
-            .get('http://dbt.io/text/search')
+          nocker2 = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/search`)
             .query((query) => {
               return query['dam_id'] === 'ENGESVO2';
             })
@@ -805,29 +805,29 @@ describe('bible', () => {
 
         beforeEach(() => {
 
-          nockDefaultVersionsESV = nock(config.proxy)
-            .get('http://dbt.io/text/search')
+          nockDefaultVersionsESV = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/search`)
             .query((query) => {
               return query['dam_id'] === 'ENGESVO2';
             })
             .reply(200, freeTextDefaultVersionsDbtResponseESV);
 
-          nockDefaultVersionsWEB = nock(config.proxy)
-            .get('http://dbt.io/text/search')
+          nockDefaultVersionsWEB = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/search`)
             .query((query) => {
               return query['dam_id'] === 'ENGWEBO2';
             })
             .reply(200, freeTextDefaultVersionsDbtResponseWEB);
 
-          nockDefaultVersionsNASB = nock(config.proxy)
-            .get('http://dbt.io/text/search')
+          nockDefaultVersionsNASB = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/search`)
             .query((query) => {
               return query['dam_id'] === 'ENGNASO2';
             })
             .reply(200, freeTextDefaultVersionsDbtResponseNASB);
 
-          nockDefaultVersionsKJV = nock(config.proxy)
-            .get('http://dbt.io/text/search')
+          nockDefaultVersionsKJV = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/search`)
             .query((query) => {
               return query['dam_id'] === 'ENGKJVO2';
             })
@@ -862,15 +862,15 @@ describe('bible', () => {
 
         it('should respect verse -> version ordering and ignore invalid versions', (done) => {
 
-          let nockVerseVersionOrderingKJV = nock(config.proxy)
-            .get('http://dbt.io/text/search')
+          let nockVerseVersionOrderingKJV = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/search`)
             .query((query) => {
               return query['dam_id'] === 'ENGKJVO2';
             })
             .reply(200, verseVersionOrderingDbtResponseKJV);
 
-          let nockVerseVersionOrderingESV = nock(config.proxy)
-            .get('http://dbt.io/text/search')
+          let nockVerseVersionOrderingESV = nock(cfg.nock.url)
+            .get(`${cfg.nock.pre}/text/search`)
             .query((query) => {
               return query['dam_id'] === 'ENGESVO2';
             })

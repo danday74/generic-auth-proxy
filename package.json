@@ -36,5 +36,6 @@
     "npm-check-updates": "^2.7.2",
     "npm-run-all": "^3.0.0",
     "supertest": "^2.0.0"
-  }
+  },
+  "engine": "node >= 6.2.2"
 }

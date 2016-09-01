@@ -4,6 +4,13 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 const config = require('./server.config');
+const ServerCreator = require('./js/ServerCreator');
+const LETS_ENCRYPT_DOMAIN = process.env.LETS_ENCRYPT_DOMAIN;
+
+let certDir = (LETS_ENCRYPT_DOMAIN) ? `/etc/letsencrypt/live/${LETS_ENCRYPT_DOMAIN}` : undefined;
+let serverCreator = new ServerCreator(app);
+let httpServer = serverCreator.createHttpServer();
+let httpsServer = serverCreator.createHttpsServer(certDir);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -13,9 +20,15 @@ app.use(require('./middlewares/1-request-logger'));
 require('./routes/bible/bible')(router);
 
 app.use('/', router);
-app.listen(config.port, () => {
-  /* istanbul ignore next */
-  config.logging && console.log('Express backend server listening on port', config.port);
+
+const HTTP_PORT = config.httpPort;
+httpServer.listen(HTTP_PORT, () => {
+  console.log(`HTTP server listening on port ${HTTP_PORT}`);
 });
 
-module.exports = app;
+const HTTPS_PORT = config.httpsPort;
+httpsServer && httpsServer.listen(HTTPS_PORT, () => {
+  console.log(`HTTPS server listening on port ${HTTPS_PORT} with certs from ${certDir}`);
+});
+
+module.exports = httpServer;
