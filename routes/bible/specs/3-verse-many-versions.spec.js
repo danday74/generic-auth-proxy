@@ -1,28 +1,28 @@
 const Imp = require('../classes/TestImports');
 const UTDATA = '../../../utdata';
 
-const chapterDbtResponseESV = require(`${UTDATA}/bible/verse-search/multiple-versions/get-chapter/dbt-esv.json`);
-const chapterDbtResponseKJV = require(`${UTDATA}/bible/verse-search/multiple-versions/get-chapter/dbt-kjv.json`);
-const chapterExpectedMultiple = require(`${UTDATA}/bible/verse-search/multiple-versions/get-chapter/expected.json`);
+const chapterDbtResponseESV = require(`${UTDATA}/bible/verse-search/many-versions/get-chapter/dbt-esv.json`);
+const chapterDbtResponseKJV = require(`${UTDATA}/bible/verse-search/many-versions/get-chapter/dbt-kjv.json`);
+const chapterExpectedMultiple = require(`${UTDATA}/bible/verse-search/many-versions/get-chapter/expected.json`);
 
-const verseDbtResponseESV = require(`${UTDATA}/bible/verse-search/multiple-versions/get-verse/dbt-esv.json`);
-const verseDbtResponseKJV = require(`${UTDATA}/bible/verse-search/multiple-versions/get-verse/dbt-kjv.json`);
-const verseExpectedMultiple = require(`${UTDATA}/bible/verse-search/multiple-versions/get-verse/expected.json`);
+const verseDbtResponseESV = require(`${UTDATA}/bible/verse-search/many-versions/get-verse/dbt-esv.json`);
+const verseDbtResponseKJV = require(`${UTDATA}/bible/verse-search/many-versions/get-verse/dbt-kjv.json`);
+const verseExpectedMultiple = require(`${UTDATA}/bible/verse-search/many-versions/get-verse/expected.json`);
 
-const versesDbtResponseESV = require(`${UTDATA}/bible/verse-search/multiple-versions/get-verses/dbt-esv.json`);
-const versesDbtResponseKJV = require(`${UTDATA}/bible/verse-search/multiple-versions/get-verses/dbt-kjv.json`);
-const versesExpectedMultiple = require(`${UTDATA}/bible/verse-search/multiple-versions/get-verses/expected.json`);
+const versesDbtResponseESV = require(`${UTDATA}/bible/verse-search/many-versions/get-verses/dbt-esv.json`);
+const versesDbtResponseKJV = require(`${UTDATA}/bible/verse-search/many-versions/get-verses/dbt-kjv.json`);
+const versesExpectedMultiple = require(`${UTDATA}/bible/verse-search/many-versions/get-verses/expected.json`);
 
-const defaultVersionsDbtResponseESV = require(`${UTDATA}/bible/verse-search/multiple-versions/default-versions/dbt-esv.json`);
-const defaultVersionsDbtResponseWEB = require(`${UTDATA}/bible/verse-search/multiple-versions/default-versions/dbt-web.json`);
-const defaultVersionsDbtResponseNASB = require(`${UTDATA}/bible/verse-search/multiple-versions/default-versions/dbt-nasb.json`);
-const defaultVersionsDbtResponseKJV = require(`${UTDATA}/bible/verse-search/multiple-versions/default-versions/dbt-kjv.json`);
-const defaultVersionsExpectedMultiple = require(`${UTDATA}/bible/verse-search/multiple-versions/default-versions/expected.json`);
+const defaultVersionsDbtResponseESV = require(`${UTDATA}/bible/verse-search/many-versions/default-versions/dbt-esv.json`);
+const defaultVersionsDbtResponseWEB = require(`${UTDATA}/bible/verse-search/many-versions/default-versions/dbt-web.json`);
+const defaultVersionsDbtResponseNASB = require(`${UTDATA}/bible/verse-search/many-versions/default-versions/dbt-nasb.json`);
+const defaultVersionsDbtResponseKJV = require(`${UTDATA}/bible/verse-search/many-versions/default-versions/dbt-kjv.json`);
+const defaultVersionsExpectedMultiple = require(`${UTDATA}/bible/verse-search/many-versions/default-versions/expected.json`);
 
-const versionOrderingDbtResponseNASB = require(`${UTDATA}/bible/verse-search/multiple-versions/version-ordering/dbt-nasb.json`);
-const versionOrderingDbtResponseKJV = require(`${UTDATA}/bible/verse-search/multiple-versions/version-ordering/dbt-kjv.json`);
-const versionOrderingDbtResponseWEB = require(`${UTDATA}/bible/verse-search/multiple-versions/version-ordering/dbt-web.json`);
-const versionOrderingExpectedMultiple = require(`${UTDATA}/bible/verse-search/multiple-versions/version-ordering/expected.json`);
+const versionOrderingDbtResponseNASB = require(`${UTDATA}/bible/verse-search/many-versions/version-ordering/dbt-nasb.json`);
+const versionOrderingDbtResponseKJV = require(`${UTDATA}/bible/verse-search/many-versions/version-ordering/dbt-kjv.json`);
+const versionOrderingDbtResponseWEB = require(`${UTDATA}/bible/verse-search/many-versions/version-ordering/dbt-web.json`);
+const versionOrderingExpectedMultiple = require(`${UTDATA}/bible/verse-search/many-versions/version-ordering/expected.json`);
 
 // nock.recorder.rec();
 
