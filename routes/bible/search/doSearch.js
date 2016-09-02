@@ -5,7 +5,7 @@ const SearchResponseResult = require('./SearchResponseResult');
 let doSearch = (res, q, versions) => {
 
   let urlTemplate = Imp._.template(Imp.config.providers.digitalBibleToolkit.endpoint
-    + `/search?v=2&key=${Imp.config.providers.digitalBibleToolkit.key}`
+    + `/text/search?v=2&key=${Imp.config.providers.digitalBibleToolkit.key}`
     + `&dam_id=<%= damId %>O2&query=${q}`);
 
   let promises = Imp.Requestor.getRequestPromises(urlTemplate, versions);

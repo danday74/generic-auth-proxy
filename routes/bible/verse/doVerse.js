@@ -12,7 +12,7 @@ let doVerse = (res, q, versions, verseInformation) => {
   }
 
   let urlTemplate = Imp._.template(Imp.config.providers.digitalBibleToolkit.endpoint
-    + `/verse?v=2&key=${Imp.config.providers.digitalBibleToolkit.key}`
+    + `/text/verse?v=2&key=${Imp.config.providers.digitalBibleToolkit.key}`
     + `&dam_id=<%= damId %>${osis.object.testament}2ET&book_id=${osis.object.id}`
     + verseInformation.url);
 

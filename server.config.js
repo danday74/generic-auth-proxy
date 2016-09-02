@@ -1,10 +1,12 @@
+let testRun = process.env.NODE_ENV === 'test';
+
 let config = {
-  logging: !(process.env.NODE_ENV === 'test'),
-  httpPort: 52922,
-  httpsPort: 52923,
+  logging: !testRun,
+  httpPort: (testRun) ? 42922 : /* istanbul ignore next */ 52922,
+  httpsPort: (testRun) ? 42923 : /* istanbul ignore next */ 52923,
   providers: {
     digitalBibleToolkit: {
-      endpoint: 'http://dbt.io/text',
+      endpoint: 'http://dbt.io',
       key: '0d1bd6c2bff512d1e68a37bb224c8247'
     }
   },
@@ -17,8 +19,8 @@ let config = {
 
 /* istanbul ignore next */
 config.nock = {
-  url: config.proxy || 'http://dbt.io',
-  pre: (config.proxy) ? 'http://dbt.io' : '' // path prefix
+  url: config.proxy || config.providers.digitalBibleToolkit.endpoint,
+  pre: (config.proxy) ? config.providers.digitalBibleToolkit.endpoint : '' // path prefix
 };
 
 module.exports = config;
