@@ -1,7 +1,8 @@
 Phase 1
 =======
 
-* Over SSL - WIP
+* Tidy up code base
+* Might need an HTML string conversion
 
 Post Phase 1
 ============
