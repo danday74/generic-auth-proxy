@@ -1,5 +1,5 @@
-const Imp = require('../../classes/TestImports');
-const UTDATA = '../../../../utdata';
+const Imp = require('../classes/TestImports');
+const UTDATA = '../../../utdata';
 
 const freeTextDbtNoResultsResponse = [[{'total_results': '0'}], []];
 
@@ -22,7 +22,7 @@ const verseVersionOrderingExpectedMultiple = require(`${UTDATA}/bible/free-text-
 
 // nock.recorder.rec();
 
-describe('search - many versions', () => {
+describe('SEARCH many versions', () => {
 
   describe('get scripture', () => {
 
@@ -107,6 +107,7 @@ describe('search - many versions', () => {
 
     let nockDefaultVersionsESV, nockDefaultVersionsWEB, nockDefaultVersionsNASB, nockDefaultVersionsKJV;
 
+    // noinspection ES6ModulesDependencies, NodeModulesDependencies
     beforeEach(() => {
 
       nockDefaultVersionsESV = Imp.nock(Imp.cfg.nock.url)

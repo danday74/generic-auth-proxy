@@ -1,5 +1,5 @@
-const Imp = require('../../classes/TestImports');
-const UTDATA = '../../../../utdata';
+const Imp = require('../classes/TestImports');
+const UTDATA = '../../../utdata';
 
 const freeTextDbtNoResultsResponse = [[{'total_results': '0'}], []];
 
@@ -8,7 +8,7 @@ const freeTextExpected = require(`${UTDATA}/bible/free-text-search/one-version/g
 
 // nock.recorder.rec();
 
-describe('search - one version', () => {
+describe('SEARCH one version', () => {
 
   describe('get scripture', () => {
 

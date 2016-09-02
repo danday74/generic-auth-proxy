@@ -1,5 +1,5 @@
-const Imp = require('../../classes/TestImports');
-const UTDATA = '../../../../utdata';
+const Imp = require('../classes/TestImports');
+const UTDATA = '../../../utdata';
 
 const chapterDbtResponseESV = require(`${UTDATA}/bible/verse-search/multiple-versions/get-chapter/dbt-esv.json`);
 const chapterDbtResponseKJV = require(`${UTDATA}/bible/verse-search/multiple-versions/get-chapter/dbt-kjv.json`);
@@ -26,7 +26,7 @@ const versionOrderingExpectedMultiple = require(`${UTDATA}/bible/verse-search/mu
 
 // nock.recorder.rec();
 
-describe('verse - many versions', () => {
+describe('VERSE many versions', () => {
 
   let chapterObj = {
     testName: 'chapter',

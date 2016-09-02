@@ -1,8 +1,8 @@
+const chai = require('chai');
+const expect = chai.expect;
 const express = require('express');
 const app = express();
 const ServerCreator = require('./ServerCreator');
-const chai = require('chai');
-const expect = chai.expect;
 
 describe('ServerCreator', () => {
 
@@ -13,7 +13,8 @@ describe('ServerCreator', () => {
     expect(httpServer).to.not.be.undefined;
   });
 
-  /* This test will fail if certs do not exist in the cert directory */
+  /* Fails where certs do not exist in the cert directory */
+  /* Fails where LETS_ENCRYPT_DOMAIN env var is not set correctly */
   it('should create an HTTPS server where certs exist in the cert directory', () => {
     const LETS_ENCRYPT_DOMAIN = process.env.LETS_ENCRYPT_DOMAIN;
     let certDir = (LETS_ENCRYPT_DOMAIN) ? `/etc/letsencrypt/live/${LETS_ENCRYPT_DOMAIN}` : undefined;

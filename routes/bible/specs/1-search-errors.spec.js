@@ -1,30 +1,30 @@
-const Imp = require('../../classes/TestImports');
-const UTDATA = '../../../../utdata';
-const chapterDbtResponse = require(`${UTDATA}/bible/verse-search/one-version/get-chapter/dbt.json`);
-const chapterExpected = require(`${UTDATA}/bible/verse-search/one-version/get-chapter/expected.json`);
+const Imp = require('../classes/TestImports');
+const UTDATA = '../../../utdata';
+const freeTextDbtResponse = require(`${UTDATA}/bible/free-text-search/one-version/get-verses/dbt.json`);
+const freeTextExpected = require(`${UTDATA}/bible/free-text-search/one-version/get-verses/expected.json`);
 
 // nock.recorder.rec();
 
-describe('verse - errors', () => {
+describe('SEARCH errors', () => {
 
   describe('timeout', () => {
 
     let nocker;
     let initNock = (socketDelay) => {
       nocker = Imp.nock(Imp.cfg.nock.url)
-        .get(`${Imp.cfg.nock.pre}/text/verse`)
+        .get(`${Imp.cfg.nock.pre}/text/search`)
         .query((query) => {
-          return query['dam_id'] === 'ENGKJVO2ET';
+          return query['dam_id'] === 'ENGKJVO2';
         })
         .socketDelay(socketDelay)
-        .reply(200, chapterDbtResponse);
+        .reply(200, freeTextDbtResponse);
     };
 
     it('should not timeout', (done) => {
       initNock(Imp.cfg.timeout.upstream - 1000);
       Imp.agent
-        .get('/bible?q=Psalms 117&versions=kjv')
-        .expect(200, chapterExpected, (err) => {
+        .get('/bible?q=For God so|so loved&versions=kjv')
+        .expect(200, freeTextExpected, (err) => {
           nocker.done();
           done(err);
         });
@@ -33,7 +33,7 @@ describe('verse - errors', () => {
     it('should respond 408 on timeout', (done) => {
       initNock(Imp.cfg.timeout.upstream + 1000);
       Imp.agent
-        .get('/bible?q=Psalms 117&versions=kjv')
+        .get('/bible?q=For God so|so loved&versions=kjv')
         .expect(408, (err) => {
           nocker.done();
           done(err);
@@ -47,14 +47,14 @@ describe('verse - errors', () => {
     it('should respond 502 where upstream response is non 2XX', (done) => {
 
       let nocker = Imp.nock(Imp.cfg.nock.url)
-        .get(`${Imp.cfg.nock.pre}/text/verse`)
+        .get(`${Imp.cfg.nock.pre}/text/search`)
         .query((query) => {
-          return query['dam_id'] === 'ENGKJVO2ET';
+          return query['dam_id'] === 'ENGKJVO2';
         })
         .reply(418); // I'm a teapot
 
       Imp.agent
-        .get('/bible?q=Psalms 117&versions=kjv')
+        .get('/bible?q=For God so|so loved&versions=kjv')
         .expect(502, (err) => {
           nocker.done();
           done(err);
@@ -64,14 +64,14 @@ describe('verse - errors', () => {
     it('should respond 502 where upstream errors', (done) => {
 
       let nocker = Imp.nock(Imp.cfg.nock.url)
-        .get(`${Imp.cfg.nock.pre}/text/verse`)
+        .get(`${Imp.cfg.nock.pre}/text/search`)
         .query((query) => {
-          return query['dam_id'] === 'ENGKJVO2ET';
+          return query['dam_id'] === 'ENGKJVO2';
         })
         .replyWithError();
 
       Imp.agent
-        .get('/bible?q=Psalms 117&versions=kjv')
+        .get('/bible?q=For God so|so loved&versions=kjv')
         .expect(502, (err) => {
           nocker.done();
           done(err);

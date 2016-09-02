@@ -1,12 +1,12 @@
-const Imp = require('../../classes/TestImports');
-const UTDATA = '../../../../utdata';
+const Imp = require('../classes/TestImports');
+const UTDATA = '../../../utdata';
 
 const chapterDbtResponse = require(`${UTDATA}/bible/verse-search/one-version/get-chapter/dbt.json`);
 const chapterExpected = require(`${UTDATA}/bible/verse-search/one-version/get-chapter/expected.json`);
 
 // nock.recorder.rec();
 
-describe('verse - fundamentals', () => {
+describe('VERSE fundamentals', () => {
 
   it('should recognise the 66 bible books', (done) => {
 

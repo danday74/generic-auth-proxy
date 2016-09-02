@@ -1,5 +1,5 @@
-const Imp = require('../../classes/TestImports');
-const UTDATA = '../../../../utdata';
+const Imp = require('../classes/TestImports');
+const UTDATA = '../../../utdata';
 
 const chapterDbtResponse = require(`${UTDATA}/bible/verse-search/one-version/get-chapter/dbt.json`);
 const chapterExpected = require(`${UTDATA}/bible/verse-search/one-version/get-chapter/expected.json`);
@@ -15,7 +15,7 @@ const versesLastVerseAsVerseExpected = require(`${UTDATA}/bible/verse-search/one
 
 // nock.recorder.rec();
 
-describe('verse - one version', () => {
+describe('VERSE one version', () => {
 
   let chapterObj = {
     testName: 'chapter',
