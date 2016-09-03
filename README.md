@@ -45,18 +45,18 @@ VERSES<br>
 http://DOMAIN:52922/bible?q=John+3:16-18&versions=esv,web,nasb,kjv
 
 HTTPS Support
-=============
+-------------
 
 HTTPS is also supported on
 
 https://DOMAIN:52923
 
-If valid certificates for **DOMAIN** are provided at
+If valid certs for **DOMAIN** are provided at
 
 /etc/letsencrypt/live/${LETS_ENCRYPT_DOMAIN}/privkey.pem<br>
 /etc/letsencrypt/live/${LETS_ENCRYPT_DOMAIN}/fullchain.pem<br>
 /etc/letsencrypt/live/${LETS_ENCRYPT_DOMAIN}/chain.pem
 
-Where **LETS_ENCRYPT_DOMAIN** is an environment variable that specifies the **root domain** for the certificates
+Where **LETS_ENCRYPT_DOMAIN** is an environment variable that specifies the **root domain** for the certs
 
 [Lets Encrypt](https://letsencrypt.org) will generate these exact files for you for free!
