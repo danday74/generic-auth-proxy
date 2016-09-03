@@ -1,17 +1,17 @@
 const Imp = require('../classes/TestImports');
 const UTDATA = '../../../utdata';
 
-const chapterDbtResponse = require(`${UTDATA}/bible/verse-search/one-version/get-chapter/dbt.json`);
-const chapterExpected = require(`${UTDATA}/bible/verse-search/one-version/get-chapter/expected.json`);
-const verseDbtResponse = require(`${UTDATA}/bible/verse-search/one-version/get-verse/dbt.json`);
-const verseExpected = require(`${UTDATA}/bible/verse-search/one-version/get-verse/expected.json`);
-const versesDbtResponse = require(`${UTDATA}/bible/verse-search/one-version/get-verses/dbt.json`);
-const versesExpected = require(`${UTDATA}/bible/verse-search/one-version/get-verses/expected.json`);
+const chapterDbtResponse = require(`${UTDATA}/bible/verse/one-version/get-chapter/dbt.json`);
+const chapterExpected = require(`${UTDATA}/bible/verse/one-version/get-chapter/expected.json`);
+const verseDbtResponse = require(`${UTDATA}/bible/verse/one-version/get-verse/dbt.json`);
+const verseExpected = require(`${UTDATA}/bible/verse/one-version/get-verse/expected.json`);
+const versesDbtResponse = require(`${UTDATA}/bible/verse/one-version/get-verses/dbt.json`);
+const versesExpected = require(`${UTDATA}/bible/verse/one-version/get-verses/expected.json`);
 
-const versesAsVerseDbtResponse = require(`${UTDATA}/bible/verse-search/one-version/get-verses-as-verse/dbt.json`);
-const versesAsVerseExpected = require(`${UTDATA}/bible/verse-search/one-version/get-verses-as-verse/expected.json`);
-const versesLastVerseAsVerseDbtResponse = require(`${UTDATA}/bible/verse-search/one-version/get-verses-last-verse-as-verse/dbt.json`);
-const versesLastVerseAsVerseExpected = require(`${UTDATA}/bible/verse-search/one-version/get-verses-last-verse-as-verse/expected.json`);
+const versesAsVerseDbtResponse = require(`${UTDATA}/bible/verse/one-version/get-verses-as-verse/dbt.json`);
+const versesAsVerseExpected = require(`${UTDATA}/bible/verse/one-version/get-verses-as-verse/expected.json`);
+const versesLastVerseAsVerseDbtResponse = require(`${UTDATA}/bible/verse/one-version/get-verses-last-verse-as-verse/dbt.json`);
+const versesLastVerseAsVerseExpected = require(`${UTDATA}/bible/verse/one-version/get-verses-last-verse-as-verse/expected.json`);
 
 // nock.recorder.rec();
 

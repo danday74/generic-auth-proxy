@@ -1,7 +1,7 @@
 const Imp = require('../classes/TestImports');
 const UTDATA = '../../../utdata';
-const chapterDbtResponse = require(`${UTDATA}/bible/verse-search/one-version/get-chapter/dbt.json`);
-const chapterExpected = require(`${UTDATA}/bible/verse-search/one-version/get-chapter/expected.json`);
+const chapterDbtResponse = require(`${UTDATA}/bible/verse/one-version/get-chapter/dbt.json`);
+const chapterExpected = require(`${UTDATA}/bible/verse/one-version/get-chapter/expected.json`);
 
 // nock.recorder.rec();
 
