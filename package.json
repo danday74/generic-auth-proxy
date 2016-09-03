@@ -2,8 +2,8 @@
   "name": "bible-api-dbt-server",
   "version": "1.0.0",
   "description": "Bible API server that relies on the Digital Bible Toolkit from www.digitalbibleplatform.com",
-  "main": "server.js",
   "author": "Daniel Lewis BSc(Hons)",
+  "main": "server.js",
   "private": true,
   "scripts": {
     "preinstall": "npm list -g nodemon || npm i -g nodemon",
@@ -15,7 +15,7 @@
     "ncu": "ncu"
   },
   "dependencies": {
-    "bluebird": "^3.4.1",
+    "bluebird": "^3.4.6",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
@@ -27,14 +27,14 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "cross-env": "^2.0.0",
+    "cross-env": "^2.0.1",
     "data-driven": "^1.2.1",
-    "eslint": "^3.3.1",
+    "eslint": "^3.4.0",
     "istanbul": "^0.4.5",
     "mocha": "^3.0.2",
     "nock": "^8.0.0",
     "npm-check-updates": "^2.7.2",
-    "npm-run-all": "^3.0.0",
+    "npm-run-all": "^3.1.0",
     "supertest": "^2.0.0"
   },
   "engine": "node >= 6.2.2"
