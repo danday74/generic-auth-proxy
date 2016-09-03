@@ -3,6 +3,15 @@ Bible API DBT server
 
 **Bible API server that relies on the Digital Bible Toolkit from [Digital Bible Platform](http://www.digitalbibleplatform.com)**
 
+Setup
+-----
+
+* Install [NodeJS](https://nodejs.org/en)
+* git clone this repo
+* cd bible-api-dbt-server
+* npm i
+* npm start -s
+
 Detail
 ------
 
