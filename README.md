@@ -1,7 +1,7 @@
 Bible API DBT server
 ====================
 
-**Bible API server that relies on the Digital Bible Toolkit from [Digital Bible Platform](www.digitalbibleplatform.com)**
+**Bible API server that relies on the Digital Bible Toolkit from [Digital Bible Platform](http://www.digitalbibleplatform.com)**
 
 Detail
 ------
@@ -23,16 +23,16 @@ Also allows required bible versions to be specified. Supported versions being
 Example Requests
 ----------------
 
-SEARCH
+SEARCH<br>
 http://DOMAIN:52922/bible?q=beautiful+are+the+feet+of+those+who+preach&versions=esv,web,nasb,kjv
 
-CHAPTER
+CHAPTER<br>
 http://DOMAIN:52922/bible?q=John+3&versions=esv,web,nasb,kjv
 
-VERSE
+VERSE<br>
 http://DOMAIN:52922/bible?q=John+3:16&versions=esv,web,nasb,kjv
 
-VERSES
+VERSES<br>
 http://DOMAIN:52922/bible?q=John+3:16-18&versions=esv,web,nasb,kjv
 
 HTTPS Support
