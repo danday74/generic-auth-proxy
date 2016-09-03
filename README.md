@@ -50,3 +50,13 @@ HTTPS Support
 HTTPS is also supported on
 
 https://DOMAIN:52923
+
+If valid certificates for **DOMAIN** are provided at
+
+/etc/letsencrypt/live/${LETS_ENCRYPT_DOMAIN}/privkey.pem
+/etc/letsencrypt/live/${LETS_ENCRYPT_DOMAIN}/fullchain.pem
+/etc/letsencrypt/live/${LETS_ENCRYPT_DOMAIN}/chain.pem
+
+Where **LETS_ENCRYPT_DOMAIN** is an environment variable that specifies the **root domain** for the certificates
+
+[Lets Encrypt](https://letsencrypt.org) will generate these exact files for you for free!
