@@ -1,6 +1,5 @@
 Bible API
----------
----------
+=========
 
 See http://www.digitalbibleplatform.com/docs/api-version-2/library-text
 
