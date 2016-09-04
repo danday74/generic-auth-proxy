@@ -1,4 +1,7 @@
+const VerseResponseResult = require('./VerseResponseResult');
+
 class VerseResponse {
+
   constructor(verse) {
     let verseStart = verse.verse_id;
 
@@ -11,9 +14,20 @@ class VerseResponse {
     };
     this.chapter = parseInt(verse.chapter_id);
     this.verseStart = parseInt(verseStart);
-    this.verseEnd = parseInt(verseStart);
+    this.verseEnd = undefined;
     this.results = [];
     Object.seal(this);
+  }
+
+  addResult(version, verseList) {
+    let result = new VerseResponseResult(version);
+    for (let verse of verseList) {
+      this.verseEnd = parseInt(verse.verse_id);
+      result.addVerse(verse, verseList.length > 1);
+    }
+    result.text = result.text.trim();
+    result.textEnhanced = result.textEnhanced.trim();
+    this.results.push(result);
   }
 
   setSubTypeAndRefs(type) {
@@ -42,8 +56,7 @@ class VerseResponse {
 
   setRefForResults() {
     this.results.forEach((result) => {
-      result.ref = `${this.ref} ${result.version.ref}`;
-      result.refEnhanced = `${this.ref} <abbr title="${result.version.name}">${result.version.ref}</abbr>`;
+      result.setRef(this.ref);
     });
   }
 

@@ -1,7 +1,6 @@
 const Imp = require('../classes/BibleImports');
-const VerseResponse = require('./VerseResponse');
-const VerseResponseResult = require('./VerseResponseResult');
 const Osis = require('../classes/Osis');
+const VerseResponse = require('./VerseResponse');
 
 let doVerse = (res, q, versions, verseInformation) => {
 
@@ -18,8 +17,6 @@ let doVerse = (res, q, versions, verseInformation) => {
 
   let promises = Imp.Requestor.getRequestPromises(urlTemplate, versions);
 
-
-
   // Handle DBT responses
   Imp.Promise.all(promises).then((dbtResponses) => {
 
@@ -30,55 +27,27 @@ let doVerse = (res, q, versions, verseInformation) => {
       // noinspection ES6ModulesDependencies, NodeModulesDependencies
       let verseList = JSON.parse(dbtResponse);
       if (verseList.length) {
-
         if (!responseObject) {
           responseObject = new VerseResponse(verseList[0]);
         }
-        let result = new VerseResponseResult(versions[counter]);
-
-        let verseCounter = 0;
-        for (let verse of verseList) {
-
-          let cleanVerseText = Imp.BibleHelper.cleanText(verse.verse_text);
-
-          if (verseCounter > 0) {
-            responseObject.verseEnd = parseInt(verse.verse_id);
-          }
-
-          result.text += `${cleanVerseText} `;
-          if (verseList.length > 1) {
-            result.textEnhanced += `<sup>${verse.verse_id}</sup>${cleanVerseText} `;
-          } else {
-            result.textEnhanced = result.text;
-          }
-          result.texts.push(cleanVerseText);
-          verseCounter++;
-        }
-
-        result.text = result.text.trim();
-        result.textEnhanced = result.textEnhanced.trim();
-
-        responseObject.results.push(result);
+        responseObject.addResult(versions[counter], verseList);
       }
-
       counter++;
     }
 
     if (responseObject && responseObject.results.length) {
       responseObject.setSubTypeAndRefs(verseInformation.type);
-
       return res.status(200).send(responseObject);
     } else {
-      return res.status(404).send('Verse search not found');
+      return res.status(404).send('Verse not found');
     }
-  }).catch((err) => {
 
+  }).catch((err) => {
     if (err.message.includes('ESOCKETTIMEDOUT')) {
       return res.sendStatus(408);
     }
     return res.sendStatus(502);
   });
-
 };
 
 module.exports = doVerse;
