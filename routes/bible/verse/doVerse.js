@@ -20,24 +20,24 @@ let doVerse = (res, q, versions, verseInformation) => {
   // Handle DBT responses
   Imp.Promise.all(promises).then((dbtResponses) => {
 
-    let responseObject;
+    let response;
     let counter = 0;
     for (let dbtResponse of dbtResponses) {
 
       // noinspection ES6ModulesDependencies, NodeModulesDependencies
       let verseList = JSON.parse(dbtResponse);
       if (verseList.length) {
-        if (!responseObject) {
-          responseObject = new VerseResponse(verseList[0]);
+        if (!response) {
+          response = new VerseResponse(verseList[0]);
         }
-        responseObject.addResult(versions[counter], verseList);
+        response.addResult(versions[counter], verseList);
       }
       counter++;
     }
 
-    if (responseObject && responseObject.results.length) {
-      responseObject.setSubTypeAndRefs(verseInformation.type);
-      return res.status(200).send(responseObject);
+    if (response && response.results.length) {
+      response.setSubTypeAndRefs(verseInformation.type);
+      return res.status(200).send(response);
     } else {
       return res.status(404).send('Verse not found');
     }

@@ -1,6 +1,7 @@
 const BibleHelper = require('../classes/BibleHelper');
 
 class VerseResponseResult {
+
   constructor(version) {
     this.ref = undefined;
     this.refEnhanced = undefined;
@@ -20,7 +21,7 @@ class VerseResponseResult {
     if (withSup) {
       this.textEnhanced += `<sup>${verse.verse_id}</sup>${cleanVerseText} `;
     } else {
-      this.textEnhanced = this.text;
+      this.textEnhanced += `${cleanVerseText} `;
     }
     this.texts.push(cleanVerseText);
   }

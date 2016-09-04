@@ -3,8 +3,6 @@ const VerseResponseResult = require('./VerseResponseResult');
 class VerseResponse {
 
   constructor(verse) {
-    let verseStart = verse.verse_id;
-
     this.type = 'verse';
     this.subType = undefined;
     this.ref = undefined;
@@ -13,7 +11,7 @@ class VerseResponse {
       name: verse.book_name
     };
     this.chapter = parseInt(verse.chapter_id);
-    this.verseStart = parseInt(verseStart);
+    this.verseStart = parseInt(verse.verse_id);
     this.verseEnd = undefined;
     this.results = [];
     Object.seal(this);
@@ -59,7 +57,6 @@ class VerseResponse {
       result.setRef(this.ref);
     });
   }
-
 }
 
 module.exports = VerseResponse;
