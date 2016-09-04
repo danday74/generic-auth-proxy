@@ -1,3 +1,4 @@
+const BibleHelper = require('../classes/BibleHelper');
 const Imp = require('../classes/BibleImports');
 const SearchResponse = require('./SearchResponse');
 const SearchResponseResult = require('./SearchResponseResult');
@@ -31,7 +32,7 @@ let doSearch = (res, q, versions) => {
     }
 
     results = Imp._.flatten(results);
-    Imp.BibleHelper.sortVersesInBiblicalOrder(results, versions);
+    BibleHelper.sortVersesInBiblicalOrder(results, versions);
 
     if (results.length) {
       return res.status(200).send(new SearchResponse(results, q));
