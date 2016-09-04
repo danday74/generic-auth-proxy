@@ -1,34 +1,35 @@
 const Imp = require('../classes/TestImports');
 const UTDATA = '../../../utdata';
+
 const searchDbtResponse = require(`${UTDATA}/bible/search/one-version/get-verses/dbt.json`);
 const searchExpected = require(`${UTDATA}/bible/search/one-version/get-verses/expected.json`);
 const verseDbtResponse = require(`${UTDATA}/bible/verse/one-version/get-chapter/dbt.json`);
 const verseExpected = require(`${UTDATA}/bible/verse/one-version/get-chapter/expected.json`);
 
-// nock.recorder.rec();
-
 let usings = [
   {
     testName: 'SEARCH',
     path: '/bible?q=For God so|so loved&versions=kjv',
-    expected: searchExpected,
     nock: {
       path: '/text/search',
       damId: 'ENGKJVO2',
       response: searchDbtResponse
-    }
+    },
+    expected: searchExpected
   },
   {
     testName: 'VERSE',
     path: '/bible?q=Psalms 117&versions=kjv',
-    expected: verseExpected,
     nock: {
       path: '/text/verse',
       damId: 'ENGKJVO2ET',
       response: verseDbtResponse
-    }
+    },
+    expected: verseExpected
   }
 ];
+
+// nock.recorder.rec();
 
 describe('errors', () => {
 
@@ -114,6 +115,7 @@ describe('errors', () => {
   describe('bad request', () => {
 
     it('should respond 400 where no query is given', (done) => {
+
       Imp.agent
         .get('/bible?q=&versions=kjv')
         .expect(400, (err) => {
