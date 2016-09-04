@@ -1,12 +1,12 @@
-let VerseInformation = require('./VerseInformation');
+const VerseInformation = require('./VerseInformation');
 
 class VerseInformationFactory {
 
   static getVerseInformation(q) {
     let re;
-    let verseInformation;
     let reMain;
     let rePrefix = '^[\\w ]+ ';
+    let verseInformation;
 
     reMain = '\\d+$';
     re = new RegExp(rePrefix + reMain);

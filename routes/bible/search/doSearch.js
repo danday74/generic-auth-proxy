@@ -21,10 +21,10 @@ let doSearch = (res, q, versions) => {
       let verseList = JSON.parse(dbtResponse)[1];
       if (verseList.length) {
 
-        let mappedVersesList = verseList.map((verse) => {
+        let mappedVerseList = verseList.map((verse) => {
           return new SearchResponseResult(versions[counter], verse, q);
         });
-        results.push(mappedVersesList);
+        results.push(mappedVerseList);
 
       }
       counter++;
@@ -36,7 +36,7 @@ let doSearch = (res, q, versions) => {
     if (results.length) {
       return res.status(200).send(new SearchResponse(results, q));
     } else {
-      return res.status(404).send('Free text search not found');
+      return res.status(404).send('Search not found');
     }
 
   }).catch((err) => {

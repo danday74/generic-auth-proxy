@@ -1,5 +1,5 @@
-let _ = require('lodash');
-let Osis = require('./Osis');
+const _ = require('lodash');
+const Osis = require('./Osis');
 
 class BibleHelper {
 
@@ -42,7 +42,6 @@ class BibleHelper {
     });
 
   }
-
 }
 
 module.exports = BibleHelper;

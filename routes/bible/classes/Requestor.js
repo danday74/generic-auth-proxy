@@ -1,5 +1,5 @@
-let config = require('../../../server.config');
-let rp = require('request-promise');
+const config = require('../../../server.config');
+const rp = require('request-promise');
 
 class Requestor {
 
@@ -8,12 +8,9 @@ class Requestor {
     let promises = [];
 
     for (let version of versions) {
-
       let url = urlTemplate({damId: version.damId});
-
       /* istanbul ignore next */
       config.logging && console.log(url);
-
       let promise = rp({
         url,
         timeout: config.timeout.upstream
