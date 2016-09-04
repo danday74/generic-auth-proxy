@@ -1,7 +1,7 @@
 Phase 1
 =======
 
-* Tidy up code base
+* Tidy up TestImports.js and specs
 * Might need an HTML string conversion
 
 Post Phase 1
