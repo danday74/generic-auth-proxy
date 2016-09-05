@@ -1,7 +1,6 @@
 const Imp = require('../classes/TestImports');
 const UTDATA = '../../../utdata';
-
-const freeTextDbtNoResultsResponse = [[{'total_results': '0'}], []];
+const dbtResponseNoResults = [[{'total_results': '0'}], []];
 
 const freeTextDbtResponseESV = require(`${UTDATA}/bible/search/many-versions/get-verses/dbt-esv.json`);
 const freeTextDbtResponseKJV = require(`${UTDATA}/bible/search/many-versions/get-verses/dbt-kjv.json`);
@@ -20,27 +19,37 @@ const verseVersionOrderingDbtResponseKJV = require(`${UTDATA}/bible/search/many-
 const verseVersionOrderingDbtResponseESV = require(`${UTDATA}/bible/search/many-versions/verse-version-ordering/dbt-esv.json`);
 const verseVersionOrderingExpectedMultiple = require(`${UTDATA}/bible/search/many-versions/verse-version-ordering/expected.json`);
 
+let getVersesObj = {
+  testName: 'verses',
+  path: '/bible?q=For God so|so loved&versions=kjv,esv',
+  responses: [freeTextDbtResponseKJV, freeTextDbtResponseESV],
+  expected: freeTextExpectedMultiple,
+  expectedLength: 5
+};
+
+let getVersesOneMatchingVersionObj = {
+  testName: 'verses where only one version has matching verses',
+  path: '/bible?q=To bring the children of Israel out of the land of Egypt&versions=kjv,esv',
+  responses: [freeTextOneMatchingDbtResponseKJV, dbtResponseNoResults],
+  expected: freeTextOneMatchingExpectedMultiple,
+  expectedLength: 1
+};
+
+let defaultVersions = {
+  testName: 'should support default versions of esv,web,nasb,kjv',
+  path: '/bible?q=the Word was God'
+};
+
+let allInvalidVersions = {
+  testName: 'should revert to default versions where all versions are invalid',
+  path: '/bible?q=the Word was God&versions=oops,doh'
+};
+
 // nock.recorder.rec();
 
 describe('SEARCH many versions', () => {
 
   describe('get scripture', () => {
-
-    let getVersesObj = {
-      testName: 'verses',
-      path: '/bible?q=For God so|so loved&versions=kjv,esv',
-      responses: [freeTextDbtResponseKJV, freeTextDbtResponseESV],
-      expected: freeTextExpectedMultiple,
-      expectedLength: 5
-    };
-
-    let getVersesOneMatchingVersionObj = {
-      testName: 'verses where only one version has matching verses',
-      path: '/bible?q=To bring the children of Israel out of the land of Egypt&versions=kjv,esv',
-      responses: [freeTextOneMatchingDbtResponseKJV, freeTextDbtNoResultsResponse],
-      expected: freeTextOneMatchingExpectedMultiple,
-      expectedLength: 1
-    };
 
     let nocker1;
     let nocker2;
@@ -80,7 +89,7 @@ describe('SEARCH many versions', () => {
 
     it('should respond 404 where no verses can be found', (done) => {
 
-      initNock([freeTextDbtNoResultsResponse, freeTextDbtNoResultsResponse]);
+      initNock([dbtResponseNoResults, dbtResponseNoResults]);
 
       Imp.agent
         .get(getVersesObj.path)
@@ -92,16 +101,6 @@ describe('SEARCH many versions', () => {
 
     });
   });
-
-  let defaultVersions = {
-    testName: 'should support default versions of esv,web,nasb,kjv',
-    path: '/bible?q=the Word was God'
-  };
-
-  let allInvalidVersions = {
-    testName: 'should revert to default versions where all versions are invalid',
-    path: '/bible?q=the Word was God&versions=oops,doh'
-  };
 
   describe('default versions', () => {
 
