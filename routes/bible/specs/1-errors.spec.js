@@ -6,7 +6,7 @@ const searchExpected = require(`${UTDATA}/bible/search/one-version/get-verses/ex
 const verseDbtResponse = require(`${UTDATA}/bible/verse/one-version/get-chapter/dbt.json`);
 const verseExpected = require(`${UTDATA}/bible/verse/one-version/get-chapter/expected.json`);
 
-let usings = [
+let testObjs = [
   {
     testName: 'SEARCH',
     path: '/bible?q=For God so|so loved&versions=kjv',
@@ -35,7 +35,7 @@ describe('errors', () => {
 
   describe('timeout', () => {
 
-    Imp.using(usings, () => {
+    Imp.using(testObjs, () => {
 
       let nocker;
       let initNock = (socketDelay, nockObj) => {
@@ -73,7 +73,7 @@ describe('errors', () => {
 
   describe('unexpected upstream response', () => {
 
-    Imp.using(usings, () => {
+    Imp.using(testObjs, () => {
 
       it('{testName} should respond 502 where upstream response is non 2XX', (testObj, done) => {
 

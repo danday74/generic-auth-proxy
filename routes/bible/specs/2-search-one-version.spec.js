@@ -4,6 +4,8 @@ const dbtResponseNoResults = [[{'total_results': '0'}], []];
 
 const dbtResponse = require(`${UTDATA}/bible/search/one-version/get-verses/dbt.json`);
 const expected = require(`${UTDATA}/bible/search/one-version/get-verses/expected.json`);
+const multipleHighlightingDbtResponse = require(`${UTDATA}/bible/search/one-version/multiple-highlighting/dbt.json`);
+const multipleHighlightingExpected = require(`${UTDATA}/bible/search/one-version/multiple-highlighting/expected.json`);
 
 let testObj = {
   path: '/bible?q=For God so|so loved&versions=kjv',
@@ -54,10 +56,10 @@ describe('SEARCH one version', () => {
 
     it('should be case insensitive', (done) => {
 
-      let query1Expected = expected;
+      let query1Expected = Object.assign({}, expected);
       query1Expected.query = 'for God so|so loved';
 
-      let query2Expected = expected;
+      let query2Expected = Object.assign({}, expected);
       query2Expected.query = 'FOR GOD SO|SO LOVED';
 
       let nocker = Imp.nock(Imp.cfg.nock.url)
@@ -81,6 +83,23 @@ describe('SEARCH one version', () => {
                 done(err);
               });
           }
+        });
+    });
+
+    it('should support multiple highlighting within the same verse', (done) => {
+
+      let nocker = Imp.nock(Imp.cfg.nock.url)
+        .get(`${Imp.cfg.nock.pre}/text/search`)
+        .query((query) => {
+          return query['dam_id'] === 'ENGESVO2';
+        })
+        .reply(200, multipleHighlightingDbtResponse);
+
+      Imp.agent
+        .get('/bible?q=for God so|that whoever believes in him&versions=esv')
+        .expect(200, multipleHighlightingExpected, (err) => {
+          nocker.done();
+          done(err);
         });
 
     });
