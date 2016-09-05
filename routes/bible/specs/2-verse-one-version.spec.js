@@ -13,44 +13,40 @@ const versesAsVerseExpected = require(`${UTDATA}/bible/verse/one-version/get-ver
 const versesLastVerseAsVerseDbtResponse = require(`${UTDATA}/bible/verse/one-version/get-verses-last-verse-as-verse/dbt.json`);
 const versesLastVerseAsVerseExpected = require(`${UTDATA}/bible/verse/one-version/get-verses-last-verse-as-verse/expected.json`);
 
+let testObjs = [{
+  testName: 'chapter',
+  path: '/bible?q=Psalms 117&versions=kjv',
+  nockResponse: chapterDbtResponse,
+  expected: chapterExpected
+}, {
+  testName: 'verse',
+  path: '/bible?q=Psalms 118:2&versions=kjv',
+  nockResponse: verseDbtResponse,
+  expected: verseExpected
+}, {
+  testName: 'verses',
+  path: '/bible?q=Psalms 119:2-3&versions=kjv',
+  nockResponse: versesDbtResponse,
+  expected: versesExpected
+}];
+
 // nock.recorder.rec();
 
 describe('VERSE one version', () => {
 
-  let chapterObj = {
-    testName: 'chapter',
-    path: '/bible?q=Psalms 117&versions=kjv',
-    nockResponse: chapterDbtResponse,
-    expected: chapterExpected
-  };
-
-  let verseObj = {
-    testName: 'verse',
-    path: '/bible?q=Psalms 118:2&versions=kjv',
-    nockResponse: verseDbtResponse,
-    expected: verseExpected
-  };
-
-  let versesObj = {
-    testName: 'verses',
-    path: '/bible?q=Psalms 119:2-3&versions=kjv',
-    nockResponse: versesDbtResponse,
-    expected: versesExpected
-  };
-
   describe('get scripture', () => {
 
-    let nocker;
-    let initNock = (response) => {
-      nocker = Imp.nock(Imp.cfg.nock.url)
-        .get(`${Imp.cfg.nock.pre}/text/verse`)
-        .query((query) => {
-          return query['dam_id'] === 'ENGKJVO2ET';
-        })
-        .reply(200, response);
-    };
+    Imp.using(testObjs, function () {
 
-    Imp.using([chapterObj, verseObj, versesObj], function () {
+      let nocker;
+      let initNock = (response) => {
+        nocker = Imp.nock(Imp.cfg.nock.url)
+          .get(`${Imp.cfg.nock.pre}/text/verse`)
+          .query((query) => {
+            return query['dam_id'] === 'ENGKJVO2ET';
+          })
+          .reply(200, response);
+      };
 
       it('should get {testName}', (testObj, done) => {
         initNock(testObj.nockResponse);
@@ -70,8 +66,8 @@ describe('VERSE one version', () => {
             nocker.done();
             done(err);
           });
-      });
 
+      });
     });
   });
 
@@ -101,7 +97,6 @@ describe('VERSE one version', () => {
               });
           }
         });
-
     });
 
     it('should record "verse" as subtype for a "verses" search where "from verse" equals "to verse"', (done) => {
@@ -119,7 +114,6 @@ describe('VERSE one version', () => {
           nocker.done();
           done(err);
         });
-
     });
 
     it('should record "verse" as subtype for a "verses" search where "from verse" is the last verse in the chapter', (done) => {
@@ -137,7 +131,6 @@ describe('VERSE one version', () => {
           nocker.done();
           done(err);
         });
-
     });
 
     it('should switch "from verse" with "to verse" where "from verse" > "to verse"', (done) => {
@@ -162,6 +155,5 @@ describe('VERSE one version', () => {
         });
 
     });
-
   });
 });
