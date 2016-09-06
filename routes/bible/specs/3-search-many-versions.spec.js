@@ -1,39 +1,22 @@
 const Imp = require('../classes/TestImports');
 const UTDATA = '../../../utdata';
-const dbtResponseNoResults = [[{'total_results': '0'}], []];
 
-const freeTextDbtResponseESV = require(`${UTDATA}/bible/search/many-versions/get-verses/dbt-esv.json`);
-const freeTextDbtResponseKJV = require(`${UTDATA}/bible/search/many-versions/get-verses/dbt-kjv.json`);
-const freeTextExpectedMultiple = require(`${UTDATA}/bible/search/many-versions/get-verses/expected.json`);
+const dbtResponseESV = require(`${UTDATA}/bible/search/many-versions/get-verses/dbt-esv.json`);
+const dbtResponseKJV = require(`${UTDATA}/bible/search/many-versions/get-verses/dbt-kjv.json`);
+const expected = require(`${UTDATA}/bible/search/many-versions/get-verses/expected.json`);
 
-const freeTextOneMatchingDbtResponseKJV = require(`${UTDATA}/bible/search/many-versions/get-verses-one-matching-version/dbt-kjv.json`);
-const freeTextOneMatchingExpectedMultiple = require(`${UTDATA}/bible/search/many-versions/get-verses-one-matching-version/expected.json`);
+const oneMatchingDbtResponseKJV = require(`${UTDATA}/bible/search/many-versions/get-verses-one-matching-version/dbt-kjv.json`);
+const oneMatchingExpectedMultiple = require(`${UTDATA}/bible/search/many-versions/get-verses-one-matching-version/expected.json`);
 
-const freeTextDefaultVersionsDbtResponseESV = require(`${UTDATA}/bible/search/many-versions/default-versions/dbt-esv.json`);
-const freeTextDefaultVersionsDbtResponseWEB = require(`${UTDATA}/bible/search/many-versions/default-versions/dbt-web.json`);
-const freeTextDefaultVersionsDbtResponseNASB = require(`${UTDATA}/bible/search/many-versions/default-versions/dbt-nasb.json`);
-const freeTextDefaultVersionsDbtResponseKJV = require(`${UTDATA}/bible/search/many-versions/default-versions/dbt-kjv.json`);
-const freeTextDefaultVersionsExpectedMultiple = require(`${UTDATA}/bible/search/many-versions/default-versions/expected.json`);
+const defaultVersionsDbtResponseESV = require(`${UTDATA}/bible/search/many-versions/default-versions/dbt-esv.json`);
+const defaultVersionsDbtResponseWEB = require(`${UTDATA}/bible/search/many-versions/default-versions/dbt-web.json`);
+const defaultVersionsDbtResponseNASB = require(`${UTDATA}/bible/search/many-versions/default-versions/dbt-nasb.json`);
+const defaultVersionsDbtResponseKJV = require(`${UTDATA}/bible/search/many-versions/default-versions/dbt-kjv.json`);
+const defaultVersionsExpectedMultiple = require(`${UTDATA}/bible/search/many-versions/default-versions/expected.json`);
 
 const verseVersionOrderingDbtResponseKJV = require(`${UTDATA}/bible/search/many-versions/verse-version-ordering/dbt-kjv.json`);
 const verseVersionOrderingDbtResponseESV = require(`${UTDATA}/bible/search/many-versions/verse-version-ordering/dbt-esv.json`);
 const verseVersionOrderingExpectedMultiple = require(`${UTDATA}/bible/search/many-versions/verse-version-ordering/expected.json`);
-
-let getVersesObj = {
-  testName: 'verses',
-  path: '/bible?q=For God so|so loved&versions=kjv,esv',
-  responses: [freeTextDbtResponseKJV, freeTextDbtResponseESV],
-  expected: freeTextExpectedMultiple,
-  expectedLength: 5
-};
-
-let getVersesOneMatchingVersionObj = {
-  testName: 'verses where only one version has matching verses',
-  path: '/bible?q=To bring the children of Israel out of the land of Egypt&versions=kjv,esv',
-  responses: [freeTextOneMatchingDbtResponseKJV, dbtResponseNoResults],
-  expected: freeTextOneMatchingExpectedMultiple,
-  expectedLength: 1
-};
 
 let defaultVersions = {
   testName: 'should support default versions of esv,web,nasb,kjv',
@@ -68,31 +51,34 @@ describe('SEARCH many versions', () => {
         .reply(200, responses[1]);
     };
 
-    Imp.using([getVersesObj, getVersesOneMatchingVersionObj], function () {
+    it('should get verses', (done) => {
+      initNock([dbtResponseKJV, dbtResponseESV]);
+      Imp.agent
+        .get('/bible?q=For God so|so loved&versions=kjv,esv')
+        .expect(200, expected, (err, res) => {
+          Imp.expect(res.body.results).to.have.length(5);
+          nocker1.done();
+          nocker2.done();
+          done(err);
+        });
+    });
 
-      it('should get {testName}', (testObj, done) => {
-
-        initNock(testObj.responses);
-
-        Imp.agent
-          .get(testObj.path)
-          .expect(200, testObj.expected, (err, res) => {
-            Imp.expect(res.body.results).to.have.length(testObj.expectedLength);
-            nocker1.done();
-            nocker2.done();
-            done(err);
-          });
-
-      });
-
+    it('should get verses where only one version has matching verses', (done) => {
+      initNock([oneMatchingDbtResponseKJV, Imp.dbtSearchResponseNoResults]);
+      Imp.agent
+        .get('/bible?q=To bring the children of Israel out of the land of Egypt&versions=kjv,esv')
+        .expect(200, oneMatchingExpectedMultiple, (err, res) => {
+          Imp.expect(res.body.results).to.have.length(1);
+          nocker1.done();
+          nocker2.done();
+          done(err);
+        });
     });
 
     it('should respond 404 where no verses can be found', (done) => {
-
-      initNock([dbtResponseNoResults, dbtResponseNoResults]);
-
+      initNock([Imp.dbtSearchResponseNoResults, Imp.dbtSearchResponseNoResults]);
       Imp.agent
-        .get(getVersesObj.path)
+        .get('/bible?q=For God so|so loved&versions=kjv,esv')
         .expect(404, (err) => {
           nocker1.done();
           nocker2.done();
@@ -114,28 +100,28 @@ describe('SEARCH many versions', () => {
         .query((query) => {
           return query['dam_id'] === 'ENGESVO2';
         })
-        .reply(200, freeTextDefaultVersionsDbtResponseESV);
+        .reply(200, defaultVersionsDbtResponseESV);
 
       nockDefaultVersionsWEB = Imp.nock(Imp.cfg.nock.url)
         .get(`${Imp.cfg.nock.pre}/text/search`)
         .query((query) => {
           return query['dam_id'] === 'ENGWEBO2';
         })
-        .reply(200, freeTextDefaultVersionsDbtResponseWEB);
+        .reply(200, defaultVersionsDbtResponseWEB);
 
       nockDefaultVersionsNASB = Imp.nock(Imp.cfg.nock.url)
         .get(`${Imp.cfg.nock.pre}/text/search`)
         .query((query) => {
           return query['dam_id'] === 'ENGNASO2';
         })
-        .reply(200, freeTextDefaultVersionsDbtResponseNASB);
+        .reply(200, defaultVersionsDbtResponseNASB);
 
       nockDefaultVersionsKJV = Imp.nock(Imp.cfg.nock.url)
         .get(`${Imp.cfg.nock.pre}/text/search`)
         .query((query) => {
           return query['dam_id'] === 'ENGKJVO2';
         })
-        .reply(200, freeTextDefaultVersionsDbtResponseKJV);
+        .reply(200, defaultVersionsDbtResponseKJV);
     });
 
     Imp.using([defaultVersions, allInvalidVersions], function () {
@@ -144,7 +130,7 @@ describe('SEARCH many versions', () => {
 
         Imp.agent
           .get(testObj.path)
-          .expect(200, freeTextDefaultVersionsExpectedMultiple, (err, res) => {
+          .expect(200, defaultVersionsExpectedMultiple, (err, res) => {
             let body = res.body;
             Imp.expect(body.results).to.have.length(4);
             Imp.expect(body.results[0].version.ref).to.equal('ESV');

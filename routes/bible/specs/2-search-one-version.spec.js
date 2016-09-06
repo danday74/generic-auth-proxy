@@ -1,6 +1,5 @@
 const Imp = require('../classes/TestImports');
 const UTDATA = '../../../utdata';
-const dbtResponseNoResults = [[{'total_results': '0'}], []];
 
 const dbtResponse = require(`${UTDATA}/bible/search/one-version/get-verses/dbt.json`);
 const expected = require(`${UTDATA}/bible/search/one-version/get-verses/expected.json`);
@@ -41,7 +40,7 @@ describe('SEARCH one version', () => {
     });
 
     it('should respond 404 where no verses can be found', (done) => {
-      initNock(dbtResponseNoResults);
+      initNock(Imp.dbtSearchResponseNoResults);
       Imp.agent
         .get(testObj.path)
         .expect(404, (err) => {
