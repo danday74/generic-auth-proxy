@@ -5,18 +5,18 @@ const dbtResponseESV = require(`${UTDATA}/bible/search/many-versions/get-verses/
 const dbtResponseKJV = require(`${UTDATA}/bible/search/many-versions/get-verses/dbt-kjv.json`);
 const expected = require(`${UTDATA}/bible/search/many-versions/get-verses/expected.json`);
 
-const oneMatchingDbtResponseKJV = require(`${UTDATA}/bible/search/many-versions/get-verses-one-matching-version/dbt-kjv.json`);
-const oneMatchingExpectedMultiple = require(`${UTDATA}/bible/search/many-versions/get-verses-one-matching-version/expected.json`);
+const oneMatchingVersionDbtResponseKJV = require(`${UTDATA}/bible/search/many-versions/get-verses-one-matching-version/dbt-kjv.json`);
+const oneMatchingVersionExpected = require(`${UTDATA}/bible/search/many-versions/get-verses-one-matching-version/expected.json`);
 
 const defaultVersionsDbtResponseESV = require(`${UTDATA}/bible/search/many-versions/default-versions/dbt-esv.json`);
-const defaultVersionsDbtResponseWEB = require(`${UTDATA}/bible/search/many-versions/default-versions/dbt-web.json`);
-const defaultVersionsDbtResponseNASB = require(`${UTDATA}/bible/search/many-versions/default-versions/dbt-nasb.json`);
 const defaultVersionsDbtResponseKJV = require(`${UTDATA}/bible/search/many-versions/default-versions/dbt-kjv.json`);
-const defaultVersionsExpectedMultiple = require(`${UTDATA}/bible/search/many-versions/default-versions/expected.json`);
+const defaultVersionsDbtResponseNASB = require(`${UTDATA}/bible/search/many-versions/default-versions/dbt-nasb.json`);
+const defaultVersionsDbtResponseWEB = require(`${UTDATA}/bible/search/many-versions/default-versions/dbt-web.json`);
+const defaultVersionsExpected = require(`${UTDATA}/bible/search/many-versions/default-versions/expected.json`);
 
-const verseVersionOrderingDbtResponseKJV = require(`${UTDATA}/bible/search/many-versions/verse-version-ordering/dbt-kjv.json`);
 const verseVersionOrderingDbtResponseESV = require(`${UTDATA}/bible/search/many-versions/verse-version-ordering/dbt-esv.json`);
-const verseVersionOrderingExpectedMultiple = require(`${UTDATA}/bible/search/many-versions/verse-version-ordering/expected.json`);
+const verseVersionOrderingDbtResponseKJV = require(`${UTDATA}/bible/search/many-versions/verse-version-ordering/dbt-kjv.json`);
+const verseVersionOrderingExpected = require(`${UTDATA}/bible/search/many-versions/verse-version-ordering/expected.json`);
 
 let defaultVersions = {
   testName: 'should support default versions of esv,web,nasb,kjv',
@@ -64,10 +64,10 @@ describe('SEARCH many versions', () => {
     });
 
     it('should get verses where only one version has matching verses', (done) => {
-      initNock([oneMatchingDbtResponseKJV, Imp.dbtSearchResponseNoResults]);
+      initNock([oneMatchingVersionDbtResponseKJV, Imp.dbtSearchResponseNoResults]);
       Imp.agent
         .get('/bible?q=To bring the children of Israel out of the land of Egypt&versions=kjv,esv')
-        .expect(200, oneMatchingExpectedMultiple, (err, res) => {
+        .expect(200, oneMatchingVersionExpected, (err, res) => {
           Imp.expect(res.body.results).to.have.length(1);
           nocker1.done();
           nocker2.done();
@@ -130,7 +130,7 @@ describe('SEARCH many versions', () => {
 
         Imp.agent
           .get(testObj.path)
-          .expect(200, defaultVersionsExpectedMultiple, (err, res) => {
+          .expect(200, defaultVersionsExpected, (err, res) => {
             let body = res.body;
             Imp.expect(body.results).to.have.length(4);
             Imp.expect(body.results[0].version.ref).to.equal('ESV');
@@ -168,7 +168,7 @@ describe('SEARCH many versions', () => {
 
       Imp.agent
         .get('/bible?q=In the beginning|so loved&versions=kjv,oops,esv')
-        .expect(200, verseVersionOrderingExpectedMultiple, (err, res) => {
+        .expect(200, verseVersionOrderingExpected, (err, res) => {
           let body = res.body;
           Imp.expect(body.results).to.have.length(34);
           Imp.expect(body.results[0].version.ref).to.equal('KJV');
