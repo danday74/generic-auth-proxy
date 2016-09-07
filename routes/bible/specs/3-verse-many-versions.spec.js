@@ -3,76 +3,85 @@ const UTDATA = '../../../utdata';
 
 const chapterDbtResponseESV = require(`${UTDATA}/bible/verse/many-versions/get-chapter/dbt-esv.json`);
 const chapterDbtResponseKJV = require(`${UTDATA}/bible/verse/many-versions/get-chapter/dbt-kjv.json`);
-const chapterExpectedMultiple = require(`${UTDATA}/bible/verse/many-versions/get-chapter/expected.json`);
+const chapterExpected = require(`${UTDATA}/bible/verse/many-versions/get-chapter/expected.json`);
 
 const verseDbtResponseESV = require(`${UTDATA}/bible/verse/many-versions/get-verse/dbt-esv.json`);
 const verseDbtResponseKJV = require(`${UTDATA}/bible/verse/many-versions/get-verse/dbt-kjv.json`);
-const verseExpectedMultiple = require(`${UTDATA}/bible/verse/many-versions/get-verse/expected.json`);
+const verseExpected = require(`${UTDATA}/bible/verse/many-versions/get-verse/expected.json`);
 
 const versesDbtResponseESV = require(`${UTDATA}/bible/verse/many-versions/get-verses/dbt-esv.json`);
 const versesDbtResponseKJV = require(`${UTDATA}/bible/verse/many-versions/get-verses/dbt-kjv.json`);
-const versesExpectedMultiple = require(`${UTDATA}/bible/verse/many-versions/get-verses/expected.json`);
+const versesExpected = require(`${UTDATA}/bible/verse/many-versions/get-verses/expected.json`);
 
 const defaultVersionsDbtResponseESV = require(`${UTDATA}/bible/verse/many-versions/default-versions/dbt-esv.json`);
-const defaultVersionsDbtResponseWEB = require(`${UTDATA}/bible/verse/many-versions/default-versions/dbt-web.json`);
-const defaultVersionsDbtResponseNASB = require(`${UTDATA}/bible/verse/many-versions/default-versions/dbt-nasb.json`);
 const defaultVersionsDbtResponseKJV = require(`${UTDATA}/bible/verse/many-versions/default-versions/dbt-kjv.json`);
-const defaultVersionsExpectedMultiple = require(`${UTDATA}/bible/verse/many-versions/default-versions/expected.json`);
+const defaultVersionsDbtResponseNASB = require(`${UTDATA}/bible/verse/many-versions/default-versions/dbt-nasb.json`);
+const defaultVersionsDbtResponseWEB = require(`${UTDATA}/bible/verse/many-versions/default-versions/dbt-web.json`);
+const defaultVersionsExpected = require(`${UTDATA}/bible/verse/many-versions/default-versions/expected.json`);
 
-const versionOrderingDbtResponseNASB = require(`${UTDATA}/bible/verse/many-versions/version-ordering/dbt-nasb.json`);
 const versionOrderingDbtResponseKJV = require(`${UTDATA}/bible/verse/many-versions/version-ordering/dbt-kjv.json`);
+const versionOrderingDbtResponseNASB = require(`${UTDATA}/bible/verse/many-versions/version-ordering/dbt-nasb.json`);
 const versionOrderingDbtResponseWEB = require(`${UTDATA}/bible/verse/many-versions/version-ordering/dbt-web.json`);
-const versionOrderingExpectedMultiple = require(`${UTDATA}/bible/verse/many-versions/version-ordering/expected.json`);
+const versionOrderingExpected = require(`${UTDATA}/bible/verse/many-versions/version-ordering/expected.json`);
+
+let testObjs = [
+  {
+    testName: 'chapter',
+    path: '/bible?q=Psalms 117&versions=kjv,esv',
+    nockResponses: [chapterDbtResponseKJV, chapterDbtResponseESV],
+    expected: chapterExpected
+  },
+  {
+    testName: 'verse',
+    path: '/bible?q=Psalms 118:2&versions=kjv,esv',
+    nockResponses: [verseDbtResponseKJV, verseDbtResponseESV],
+    expected: verseExpected
+  },
+  {
+    testName: 'verses',
+    path: '/bible?q=Psalms 119:2-3&versions=kjv,esv',
+    nockResponses: [versesDbtResponseKJV, versesDbtResponseESV],
+    expected: versesExpected
+  }
+];
+
+let defaultVersions = {
+  testName: 'should support default versions of esv,web,nasb,kjv',
+  path: '/bible?q=Genesis 1:2'
+};
+
+let allInvalidVersions = {
+  testName: 'should revert to default versions where all versions are invalid',
+  path: '/bible?q=Genesis 1:2&versions=oops,doh'
+};
 
 // nock.recorder.rec();
 
 describe('VERSE many versions', () => {
 
-  let chapterObj = {
-    testName: 'chapter',
-    path: '/bible?q=Psalms 117&versions=kjv,esv',
-    nockResponses: [chapterDbtResponseKJV, chapterDbtResponseESV],
-    expected: chapterExpectedMultiple
-  };
-
-  let verseObj = {
-    testName: 'verse',
-    path: '/bible?q=Psalms 118:2&versions=kjv,esv',
-    nockResponses: [verseDbtResponseKJV, verseDbtResponseESV],
-    expected: verseExpectedMultiple
-  };
-
-  let versesObj = {
-    testName: 'verses',
-    path: '/bible?q=Psalms 119:2-3&versions=kjv,esv',
-    nockResponses: [versesDbtResponseKJV, versesDbtResponseESV],
-    expected: versesExpectedMultiple
-  };
-
   describe('get scripture', () => {
 
-    let nocker1;
-    let nocker2;
-    let initNock = (responses) => {
-      nocker1 = Imp.nock(Imp.cfg.nock.url)
-        .get(`${Imp.cfg.nock.pre}/text/verse`)
-        .query((query) => {
-          return query['dam_id'] === 'ENGKJVO2ET';
-        })
-        .reply(200, responses[0]);
+    Imp.using(testObjs, function () {
 
-      nocker2 = Imp.nock(Imp.cfg.nock.url)
-        .get(`${Imp.cfg.nock.pre}/text/verse`)
-        .query((query) => {
-          return query['dam_id'] === 'ENGESVO2ET';
-        })
-        .reply(200, responses[1]);
-    };
+      let nocker1;
+      let nocker2;
+      let initNock = (responses) => {
+        nocker1 = Imp.nock(Imp.cfg.nock.url)
+          .get(`${Imp.cfg.nock.pre}/text/verse`)
+          .query((query) => {
+            return query['dam_id'] === 'ENGKJVO2ET';
+          })
+          .reply(200, responses[0]);
 
-    Imp.using([chapterObj, verseObj, versesObj], function () {
+        nocker2 = Imp.nock(Imp.cfg.nock.url)
+          .get(`${Imp.cfg.nock.pre}/text/verse`)
+          .query((query) => {
+            return query['dam_id'] === 'ENGESVO2ET';
+          })
+          .reply(200, responses[1]);
+      };
 
       it('should get {testName}', (testObj, done) => {
-
         initNock(testObj.nockResponses);
         Imp.agent
           .get(testObj.path)
@@ -84,7 +93,6 @@ describe('VERSE many versions', () => {
       });
 
       it('should respond 404 where {testName} does not exist', (testObj, done) => {
-
         initNock([[], []]);
         Imp.agent
           .get(testObj.path)
@@ -93,20 +101,10 @@ describe('VERSE many versions', () => {
             nocker2.done();
             done(err);
           });
-      });
 
+      });
     });
   });
-
-  let defaultVersions = {
-    testName: 'should support default versions of esv,web,nasb,kjv',
-    path: '/bible?q=Genesis 1:2'
-  };
-
-  let allInvalidVersions = {
-    testName: 'should revert to default versions where all versions are invalid',
-    path: '/bible?q=Genesis 1:2&versions=oops,doh'
-  };
 
   describe('default versions', () => {
 
@@ -142,7 +140,6 @@ describe('VERSE many versions', () => {
           return query['dam_id'] === 'ENGKJVO2ET';
         })
         .reply(200, defaultVersionsDbtResponseKJV);
-
     });
 
     Imp.using([defaultVersions, allInvalidVersions], function () {
@@ -151,7 +148,7 @@ describe('VERSE many versions', () => {
 
         Imp.agent
           .get(testObj.path)
-          .expect(200, defaultVersionsExpectedMultiple, (err, res) => {
+          .expect(200, defaultVersionsExpected, (err, res) => {
             let body = res.body;
             Imp.expect(body.results).to.have.length(4);
             Imp.expect(body.results[0].version.ref).to.equal('ESV');
@@ -196,7 +193,7 @@ describe('VERSE many versions', () => {
 
       Imp.agent
         .get('/bible?q=Genesis 1:3&versions=nasb,kjv,oops,web')
-        .expect(200, versionOrderingExpectedMultiple, (err, res) => {
+        .expect(200, versionOrderingExpected, (err, res) => {
           let body = res.body;
           Imp.expect(body.results).to.have.length(3);
           Imp.expect(body.results[0].version.ref).to.equal('NASB');
@@ -207,7 +204,7 @@ describe('VERSE many versions', () => {
           nockVersionOrderingWEB.done();
           done(err);
         });
-    });
 
+    });
   });
 });
