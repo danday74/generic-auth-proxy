@@ -124,7 +124,7 @@ describe('SEARCH many versions', () => {
         .reply(200, defaultVersionsDbtResponseKJV);
     });
 
-    Imp.using([defaultVersions, allInvalidVersions], function () {
+    Imp.using([defaultVersions, allInvalidVersions], () => {
 
       it('{testName}', (testObj, done) => {
 

@@ -61,7 +61,7 @@ describe('VERSE many versions', () => {
 
   describe('get scripture', () => {
 
-    Imp.using(testObjs, function () {
+    Imp.using(testObjs, () => {
 
       let nocker1;
       let nocker2;
@@ -142,7 +142,7 @@ describe('VERSE many versions', () => {
         .reply(200, defaultVersionsDbtResponseKJV);
     });
 
-    Imp.using([defaultVersions, allInvalidVersions], function () {
+    Imp.using([defaultVersions, allInvalidVersions], () => {
 
       it('{testName}', (testObj, done) => {
 

@@ -36,7 +36,7 @@ describe('VERSE one version', () => {
 
   describe('get scripture', () => {
 
-    Imp.using(testObjs, function () {
+    Imp.using(testObjs, () => {
 
       let nocker;
       let initNock = (response) => {
