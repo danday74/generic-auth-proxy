@@ -42,12 +42,11 @@ describe('VERSE fundamentals', () => {
   });
 
   it('should respond 404 where a bible book cannot be identified', (done) => {
-
     Imp.agent
       .get('/bible?q=Gonesis 1&versions=kjv')
       .expect(404, (err) => {
         done(err);
       });
-  });
 
+  });
 });
