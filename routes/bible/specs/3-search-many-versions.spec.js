@@ -54,7 +54,7 @@ describe('SEARCH many versions', () => {
     it('should get verses', (done) => {
       initNock([dbtResponseKJV, dbtResponseESV]);
       Imp.agent
-        .get('/bible?q=For God so|so loved&versions=kjv,esv')
+        .get('/bible?q=so loved&versions=kjv,esv')
         .expect(200, expected, (err, res) => {
           Imp.expect(res.body.results).to.have.length(5);
           nocker1.done();
@@ -78,7 +78,7 @@ describe('SEARCH many versions', () => {
     it('should respond 404 where no verses can be found', (done) => {
       initNock([Imp.dbtSearchResponseNoResults, Imp.dbtSearchResponseNoResults]);
       Imp.agent
-        .get('/bible?q=For God so|so loved&versions=kjv,esv')
+        .get('/bible?q=so loved&versions=kjv,esv')
         .expect(404, (err) => {
           nocker1.done();
           nocker2.done();

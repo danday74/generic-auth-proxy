@@ -9,7 +9,7 @@ const verseExpected = require(`${UTDATA}/bible/verse/one-version/get-chapter/exp
 let testObjs = [
   {
     testName: 'SEARCH',
-    path: '/bible?q=For God so|so loved&versions=kjv',
+    path: '/bible?q=so loved&versions=kjv',
     nock: {
       path: '/text/search',
       damId: 'ENGKJVO2',

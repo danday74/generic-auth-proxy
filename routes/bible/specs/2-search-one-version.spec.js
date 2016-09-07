@@ -9,7 +9,7 @@ const noOverlappedHighlightingDbtResponse = require(`${UTDATA}/bible/search/one-
 const noOverlappedHighlightingExpected = require(`${UTDATA}/bible/search/one-version/no-overlapped-highlighting/expected.json`);
 
 let testObj = {
-  path: '/bible?q=For God so|so loved&versions=kjv',
+  path: '/bible?q=so loved&versions=kjv',
   nockResponse: dbtResponse,
   expected: expected
 };
@@ -58,10 +58,10 @@ describe('SEARCH one version', () => {
     it('should be case insensitive', (done) => {
 
       let query1Expected = Object.assign({}, expected);
-      query1Expected.query = 'for God so|so loved';
+      query1Expected.query = 'so loved';
 
       let query2Expected = Object.assign({}, expected);
-      query2Expected.query = 'FOR GOD SO|SO LOVED';
+      query2Expected.query = 'SO LOVED';
 
       let nocker = Imp.nock(Imp.cfg.nock.url)
         .get(`${Imp.cfg.nock.pre}/text/search`)
