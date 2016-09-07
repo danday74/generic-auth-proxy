@@ -78,7 +78,7 @@ describe('SEARCH many versions', () => {
     it('should respond 404 where no verses can be found', (done) => {
       initNock([Imp.dbtSearchResponseNoResults, Imp.dbtSearchResponseNoResults]);
       Imp.agent
-        .get('/bible?q=so loved&versions=kjv,esv')
+        .get('/bible?q=some unusual search text&versions=kjv,esv')
         .expect(404, (err) => {
           nocker1.done();
           nocker2.done();
