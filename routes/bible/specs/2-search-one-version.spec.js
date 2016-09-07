@@ -3,6 +3,8 @@ const UTDATA = '../../../utdata';
 
 const dbtResponse = require(`${UTDATA}/bible/search/one-version/get-verses/dbt.json`);
 const expected = require(`${UTDATA}/bible/search/one-version/get-verses/expected.json`);
+const orHighlightingDbtResponse = require(`${UTDATA}/bible/search/one-version/or-highlighting/dbt.json`);
+const orHighlightingExpected = require(`${UTDATA}/bible/search/one-version/or-highlighting/expected.json`);
 const multipleHighlightingDbtResponse = require(`${UTDATA}/bible/search/one-version/multiple-highlighting/dbt.json`);
 const multipleHighlightingExpected = require(`${UTDATA}/bible/search/one-version/multiple-highlighting/expected.json`);
 const noOverlappedHighlightingDbtResponse = require(`${UTDATA}/bible/search/one-version/no-overlapped-highlighting/dbt.json`);
@@ -84,6 +86,23 @@ describe('SEARCH one version', () => {
                 done(err);
               });
           }
+        });
+    });
+
+    it('should support OR highlighting', (done) => {
+
+      let nocker = Imp.nock(Imp.cfg.nock.url)
+        .get(`${Imp.cfg.nock.pre}/text/search`)
+        .query((query) => {
+          return query['dam_id'] === 'ENGESVO2';
+        })
+        .reply(200, orHighlightingDbtResponse);
+
+      Imp.agent
+        .get('/bible?q=Jesus wept|worthy is the Lamb&versions=esv')
+        .expect(200, orHighlightingExpected, (err) => {
+          nocker.done();
+          done(err);
         });
     });
 
