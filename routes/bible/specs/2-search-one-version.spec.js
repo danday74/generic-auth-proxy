@@ -5,6 +5,8 @@ const dbtResponse = require(`${UTDATA}/bible/search/one-version/get-verses/dbt.j
 const expected = require(`${UTDATA}/bible/search/one-version/get-verses/expected.json`);
 const multipleHighlightingDbtResponse = require(`${UTDATA}/bible/search/one-version/multiple-highlighting/dbt.json`);
 const multipleHighlightingExpected = require(`${UTDATA}/bible/search/one-version/multiple-highlighting/expected.json`);
+const noOverlappedHighlightingDbtResponse = require(`${UTDATA}/bible/search/one-version/no-overlapped-highlighting/dbt.json`);
+const noOverlappedHighlightingExpected = require(`${UTDATA}/bible/search/one-version/no-overlapped-highlighting/expected.json`);
 
 let testObj = {
   path: '/bible?q=For God so|so loved&versions=kjv',
@@ -97,6 +99,23 @@ describe('SEARCH one version', () => {
       Imp.agent
         .get('/bible?q=for God so|that whoever believes in him&versions=esv')
         .expect(200, multipleHighlightingExpected, (err) => {
+          nocker.done();
+          done(err);
+        });
+    });
+
+    it('should prevent overlapped highlighting within the same verse', (done) => {
+
+      let nocker = Imp.nock(Imp.cfg.nock.url)
+        .get(`${Imp.cfg.nock.pre}/text/search`)
+        .query((query) => {
+          return query['dam_id'] === 'ENGESVO2';
+        })
+        .reply(200, noOverlappedHighlightingDbtResponse);
+
+      Imp.agent
+        .get('/bible?q=whoever believes in him should not perish but have|should not perish but have eternal life&versions=esv')
+        .expect(200, noOverlappedHighlightingExpected, (err) => {
           nocker.done();
           done(err);
         });
