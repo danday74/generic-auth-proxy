@@ -142,8 +142,8 @@ describe('SEARCH many versions', () => {
             nockDefaultVersionsNASB.done();
             nockDefaultVersionsKJV.done();
             done(err);
-
           });
+
       });
     });
   });
@@ -177,7 +177,7 @@ describe('SEARCH many versions', () => {
           nockVerseVersionOrderingESV.done();
           done(err);
         });
-    });
 
+    });
   });
 });
