@@ -9,7 +9,7 @@ Setup
 * Install [NodeJS](https://nodejs.org/en)
 * git clone this repo
 * cd bible-api-dbt-server
-* npm i
+* npm i --unsafe-perm
 * npm start -s
 
 Detail
