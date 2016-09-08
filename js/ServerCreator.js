@@ -5,6 +5,7 @@ const https = require('https');
 class ServerCreator {
 
   constructor(app) {
+    // noinspection JSUnresolvedVariable
     this.app = app;
   }
 
