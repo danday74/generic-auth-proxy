@@ -1,5 +1,8 @@
 /.idea/
 /coverage/
 /node_modules/
-nohup.out
 npm-debug.log
+
+# Forever logs
+ferr.log
+fout.log

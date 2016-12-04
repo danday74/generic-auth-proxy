@@ -1,4 +1,4 @@
-const config = require('../../../server.config');
+const config = require('../../../bibleServer.config');
 const rp = require('request-promise');
 
 class Requestor {

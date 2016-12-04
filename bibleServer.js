@@ -3,7 +3,8 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const app = express();
 const router = express.Router();
-const config = require('./server.config');
+const config = require('./bibleServer.config');
+const Logger = require('./js/Logger');
 const ServerCreator = require('./js/ServerCreator');
 const LETS_ENCRYPT_DOMAIN = process.env.LETS_ENCRYPT_DOMAIN;
 
@@ -24,13 +25,13 @@ app.use('/', router);
 const HTTP_PORT = config.httpPort;
 httpServer.listen(HTTP_PORT, () => {
   /* istanbul ignore next */
-  config.logging && console.log(`HTTP server listening on port ${HTTP_PORT}`);
+  config.logging && console.log(`${Logger.getTimestamp()} ==================== HTTP server listening on port ${HTTP_PORT}`);
 });
 
 const HTTPS_PORT = config.httpsPort;
 httpsServer && httpsServer.listen(HTTPS_PORT, () => {
   /* istanbul ignore next */
-  config.logging && console.log(`HTTPS server listening on port ${HTTPS_PORT} with certs from ${certDir}`);
+  config.logging && console.log(`${Logger.getTimestamp()} ==================== HTTPS server listening on port ${HTTPS_PORT} with certs from ${certDir}`);
 });
 
 module.exports = httpServer;
