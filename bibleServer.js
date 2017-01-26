@@ -1,14 +1,16 @@
+require('./test/server.bootstrap');
+
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const express = require('express');
+const hostname = require('os').hostname();
 const app = express();
 const router = express.Router();
 const config = require('./bibleServer.config');
 const Logger = require('./js/Logger');
 const ServerCreator = require('./js/ServerCreator');
-const LETS_ENCRYPT_DOMAIN = process.env.LETS_ENCRYPT_DOMAIN;
 
-let certDir = (LETS_ENCRYPT_DOMAIN) ? `/etc/letsencrypt/live/${LETS_ENCRYPT_DOMAIN}` : /* istanbul ignore next */ undefined;
+let certDir = `/etc/letsencrypt/live/${hostname}`;
 let serverCreator = new ServerCreator(app);
 let httpServer = serverCreator.createHttpServer();
 let httpsServer = serverCreator.createHttpsServer(certDir);

@@ -2,6 +2,7 @@ const chai = require('chai');
 const expect = chai.expect;
 const express = require('express');
 const app = express();
+const hostname = require('os').hostname();
 const ServerCreator = require('./ServerCreator');
 
 describe('ServerCreator', () => {
@@ -14,10 +15,8 @@ describe('ServerCreator', () => {
   });
 
   /* Fails where certs do not exist in the cert directory */
-  /* Fails where LETS_ENCRYPT_DOMAIN env var is not set correctly */
   it('should create an HTTPS server where certs exist in the cert directory', () => {
-    const LETS_ENCRYPT_DOMAIN = process.env.LETS_ENCRYPT_DOMAIN;
-    let certDir = (LETS_ENCRYPT_DOMAIN) ? `/etc/letsencrypt/live/${LETS_ENCRYPT_DOMAIN}` : undefined;
+    let certDir = `/etc/letsencrypt/live/${hostname}`;
     let serverCreator = new ServerCreator(app);
     let httpsServer = serverCreator.createHttpsServer(certDir);
     // noinspection BadExpressionStatementJS

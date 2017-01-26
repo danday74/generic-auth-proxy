@@ -53,10 +53,8 @@ https://DOMAIN:52923
 
 If valid certs for **DOMAIN** are provided at
 
-/etc/letsencrypt/live/${LETS_ENCRYPT_DOMAIN}/privkey.pem<br>
-/etc/letsencrypt/live/${LETS_ENCRYPT_DOMAIN}/fullchain.pem<br>
-/etc/letsencrypt/live/${LETS_ENCRYPT_DOMAIN}/chain.pem
-
-Where **LETS_ENCRYPT_DOMAIN** is an environment variable that specifies the **root domain** for the certs
+/etc/letsencrypt/live/HOSTNAME/privkey.pem<br>
+/etc/letsencrypt/live/HOSTNAME/fullchain.pem<br>
+/etc/letsencrypt/live/HOSTNAME/chain.pem
 
 [Lets Encrypt](https://letsencrypt.org) will generate these exact files for you for free!

@@ -1,5 +1,5 @@
 const Imp = require('../classes/TestImports');
-const UTDATA = '../../../utdata';
+const UTDATA = appRoot + '/utdata';
 
 const dbtResponseESV = require(`${UTDATA}/bible/search/many-versions/get-verses/dbt-esv.json`);
 const dbtResponseKJV = require(`${UTDATA}/bible/search/many-versions/get-verses/dbt-kjv.json`);
