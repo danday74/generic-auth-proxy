@@ -1,7 +1,9 @@
+const domain = require('os').hostname().split('.').pop() + '.com';
 let testRun = process.env.NODE_ENV === 'test';
 
 let config = {
   logging: !testRun,
+  domain,
   httpPort: (testRun) ? 42922 : /* istanbul ignore next */ 52922,
   httpsPort: (testRun) ? 42923 : /* istanbul ignore next */ 52923,
   providers: {
