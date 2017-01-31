@@ -14,6 +14,7 @@ let serverCreator = new ServerCreator(app);
 let httpServer = serverCreator.createHttpServer();
 let httpsServer = serverCreator.createHttpsServer(certDir);
 
+app.disable('x-powered-by');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
