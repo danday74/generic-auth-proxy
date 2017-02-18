@@ -6,14 +6,12 @@
   "main": "bibleServer.js",
   "private": true,
   "scripts": {
-    "preinstall": "npm list -g nodemon || npm i -g nodemon",
-    "postinstall": "test -d .git && cp gitHookPrePush.sh .git/hooks/pre-push || true",
     "start": "nodemon bibleServer.js",
-    "forever": "npm list -g forever && forever start -a -l bible.log -o fout.log -e ferr.log bibleServer.js || echo Please install forever globally",
+    "forever": "pm2 start pm2.yaml",
     "test": "./node_modules/.bin/istanbul cover -x \"**/*.spec.js\" ./node_modules/mocha/bin/_mocha -- js routes",
     "enforcer": "./node_modules/.bin/istanbul check-coverage --statement 100 --branch 100 --function 100 --line 100",
     "build": "npm-run-all test enforcer",
-    "ncu": "ncu"
+    "postinstall": "test -d .git && cp gitHookPrePush.sh .git/hooks/pre-push || true"
   },
   "dependencies": {
     "app-root-path": "^2.0.1",
@@ -36,7 +34,6 @@
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "nock": "^9.0.2",
-    "npm-check-updates": "^2.8.7",
     "npm-run-all": "^4.0.1",
     "supertest": "^2.0.1"
   },

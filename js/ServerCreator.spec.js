@@ -16,9 +16,8 @@ describe('ServerCreator', () => {
 
   /* Fails where certs do not exist in the cert directory */
   it('should create an HTTPS server where certs exist in the cert directory', () => {
-    let certDir = `/etc/letsencrypt/live/${config.domain}`;
     let serverCreator = new ServerCreator(app);
-    let httpsServer = serverCreator.createHttpsServer(certDir);
+    let httpsServer = serverCreator.createHttpsServer(config.certDir);
     // noinspection BadExpressionStatementJS
     expect(httpsServer).to.not.be.undefined;
   });

@@ -23,7 +23,8 @@ class ServerCreator {
       let options = {
         key: fs.readFileSync(`${certDir}/privkey.pem`),
         cert: fs.readFileSync(`${certDir}/fullchain.pem`),
-        ca: fs.readFileSync(`${certDir}/chain.pem`)
+        ca: fs.readFileSync(`${certDir}/chain.pem`),
+        dhparam: fs.readFileSync(`${certDir}/dhparam.pem`)
       };
       return https.createServer(options, this.app);
     } catch (err) {

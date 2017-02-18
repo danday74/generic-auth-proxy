@@ -1,0 +1,9 @@
+---
+- name: bible
+  script: bibleServer.js
+  instances: 0
+  exec_mode: cluster
+  # see http://pm2.keymetrics.io/docs/usage/application-declaration/#control-flow
+  max_restarts: 5
+  min_uptime: 5000
+  restart_delay: 1000

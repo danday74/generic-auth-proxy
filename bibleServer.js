@@ -9,10 +9,9 @@ const config = require('./bibleServer.config');
 const Logger = require('./js/Logger');
 const ServerCreator = require('./js/ServerCreator');
 
-let certDir = `/etc/letsencrypt/live/${config.domain}`;
 let serverCreator = new ServerCreator(app);
 let httpServer = serverCreator.createHttpServer();
-let httpsServer = serverCreator.createHttpsServer(certDir);
+let httpsServer = serverCreator.createHttpsServer(config.certDir);
 
 app.disable('x-powered-by');
 app.use(bodyParser.json());
@@ -33,7 +32,7 @@ httpServer.listen(HTTP_PORT, () => {
 const HTTPS_PORT = config.httpsPort;
 httpsServer && httpsServer.listen(HTTPS_PORT, () => {
   /* istanbul ignore next */
-  config.logging && console.log(`${Logger.getTimestamp()} ==================== HTTPS server listening on port ${HTTPS_PORT} with certs from ${certDir}`);
+  config.logging && console.log(`${Logger.getTimestamp()} ==================== HTTPS server listening on port ${HTTPS_PORT} with certs from ${config.certDir}`);
 });
 
 module.exports = httpServer;
