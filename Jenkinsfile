@@ -23,7 +23,7 @@ pipeline {
 
     stage('Build') {
       when {
-        branch '*/master'
+        branch 'master'
       }
       steps {
         // sh 'docker login -u ${DOCKER_REGISTRY_CREDENTIALS_USR} -p ${DOCKER_REGISTRY_CREDENTIALS_PSW} registry.gitlab.com'
@@ -34,7 +34,7 @@ pipeline {
 
     stage('Deploy') {
       when {
-        branch '*/master'
+        branch 'master'
       }
       steps {
         echo 'Deploying'
