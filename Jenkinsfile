@@ -4,7 +4,7 @@ pipeline {
 
   environment {
     IMAGE = 'registry.gitlab.com/danday74/bible-server'
-    // DOCKER_REGISTRY_CREDENTIALS = credentials('DOCKER_REGISTRY_CREDENTIALS')
+    DOCKER_REGISTRY_CREDENTIALS = credentials('DOCKER_REGISTRY_CREDENTIALS')
   }
 
   options {
@@ -26,7 +26,7 @@ pipeline {
         branch 'master'
       }
       steps {
-        // sh 'docker login -u ${DOCKER_REGISTRY_CREDENTIALS_USR} -p ${DOCKER_REGISTRY_CREDENTIALS_PSW} registry.gitlab.com'
+        sh 'docker login -u ${DOCKER_REGISTRY_CREDENTIALS_USR} -p ${DOCKER_REGISTRY_CREDENTIALS_PSW} registry.gitlab.com'
         sh 'docker build -t ${IMAGE}:${BRANCH_NAME} .'
         sh 'docker push ${IMAGE}:${BRANCH_NAME}'
       }
