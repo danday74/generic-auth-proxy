@@ -4,7 +4,7 @@ pipeline {
 
   environment {
     IMAGE = 'registry.gitlab.com/danday74/bible-server'
-    DOCKER_REGISTRY_CREDENTIALS = credentials('DOCKER_REGISTRY_CREDENTIALS')
+    DOCKER_REGISTRY_CREDENTIALS = credentials('GITLAB_CREDENTIALS')
   }
 
   options {
@@ -44,6 +44,7 @@ pipeline {
 
   post {
     success {
+      echo 'Success'
       // build '../downstream/master' // this works
     }
     failure {
