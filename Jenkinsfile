@@ -14,6 +14,13 @@ pipeline {
 
   stages {
 
+    stage('EnvTest') {
+      steps {
+        echo ${DEFAULT_MAILER_TO_ADDRESS}
+        echo ${BUILD_URL}
+      }
+    }
+
     stage('Test') {
       steps {
         sh 'yarn'
