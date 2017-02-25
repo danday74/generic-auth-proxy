@@ -16,7 +16,7 @@ pipeline {
 
     stage('EnvTest') {
       steps {
-        mail to: '${DEFAULT_MAILER_TO_ADDRESS}', subject: 'BUILD SUCCESS: ${currentBuild.fullDisplayName}', body: 'Fix the build at ${JENKINS_URL}'
+        mail to: "${DEFAULT_MAILER_TO_ADDRESS}", subject: 'BUILD SUCCESS: ${currentBuild.fullDisplayName}', body: 'Fix the build at ${JENKINS_URL}'
       }
     }
 
