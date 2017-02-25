@@ -16,7 +16,7 @@ pipeline {
 
     stage('EnvTest') {
       steps {
-        echo ${DEFAULT_MAILER_TO_ADDRESS}
+        echo ${env.DEFAULT_MAILER_TO_ADDRESS}
         // echo ${BUILD_URL}
       }
     }
