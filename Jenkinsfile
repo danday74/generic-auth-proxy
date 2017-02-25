@@ -20,7 +20,7 @@ pipeline {
         echo "${DEFAULT_MAILER_TO_ADDRESS}"
         echo '${env.DEFAULT_MAILER_TO_ADDRESS}'
         echo "${env.DEFAULT_MAILER_TO_ADDRESS}"
-//        echo '${currentBuild.fullDisplayName}'
+        echo '${currentBuild.fullDisplayName}'
 //        echo "${currentBuild.fullDisplayName}"
 //        echo '${BUILD_URL}'
 //        echo "${BUILD_URL}"
