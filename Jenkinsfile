@@ -14,12 +14,6 @@ pipeline {
 
   stages {
 
-    stage('EnvTest') {
-      steps {
-        mail to: "${DEFAULT_MAILER_TO_ADDRESS}", subject: 'BUILD SUCCESS: ${currentBuild.fullDisplayName}', body: 'Fix the build at ${JENKINS_URL}'
-      }
-    }
-
     stage('Test') {
       steps {
         sh 'yarn'
@@ -51,11 +45,11 @@ pipeline {
   post {
     success {
       echo 'Success'
-      mail to: '${DEFAULT_MAILER_TO_ADDRESS}', subject: 'BUILD SUCCESS: ${currentBuild.fullDisplayName}', body: 'Fix the build at ${JENKINS_URL}'
+      mail to: "${DEFAULT_MAILER_TO_ADDRESS}", subject: "BUILD SUCCESS: ${currentBuild.fullDisplayName}", body: "Fix the build at ${JENKINS_URL}"
       // build '../downstream/master' // this works
     }
     failure {
-      mail to: ${DEFAULT_MAILER_TO_ADDRESS}, subject: 'BUILD FAILURE: ${currentBuild.fullDisplayName}', body: 'Fix the build at ${BUILD_URL}'
+      mail to: "${DEFAULT_MAILER_TO_ADDRESS}", subject: "BUILD FAILURE: ${currentBuild.fullDisplayName}", body: "Fix the build at ${JENKINS_URL}"
     }
   }
 }
