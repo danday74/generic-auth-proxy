@@ -1,5 +1,5 @@
 {
-  "name": "bible-api-dbt-server",
+  "name": "bible-server",
   "version": "1.0.0",
   "description": "Bible API server that relies on the Digital Bible Toolkit from www.digitalbibleplatform.com",
   "author": "Daniel Lewis BSc(Hons)",
@@ -37,5 +37,5 @@
     "npm-run-all": "^4.0.1",
     "supertest": "^2.0.1"
   },
-  "engine": "node >= 6.9.4"
+  "engine": "node >= 6.10.0"
 }

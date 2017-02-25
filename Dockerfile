@@ -3,7 +3,7 @@
 # docker run ???
 # docker push ${IMAGE}
 
-FROM node:6.9.5
+FROM node:6.10.0
 EXPOSE 52923
 
 ENV wd /usr/src/app
