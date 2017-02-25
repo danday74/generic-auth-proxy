@@ -2,7 +2,3 @@
 /coverage/
 /node_modules/
 npm-debug.log
-
-# Forever logs
-ferr.log
-fout.log
