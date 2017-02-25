@@ -44,11 +44,10 @@ pipeline {
 
   post {
     success {
-      echo 'Success'
+      // build '../downstream/master' // this works
     }
     failure {
-      // mail to: "daniellewis777@gmail.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Boo, we failed."
-      echo 'Failure'
+      mail to: ${DEFAULT_MAILER_TO_ADDRESS}, subject: 'BUILD FAILURE: ${currentBuild.fullDisplayName}', body: 'Fix the build at ${BUILD_URL}'
     }
   }
 }
