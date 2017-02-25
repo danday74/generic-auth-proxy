@@ -25,7 +25,9 @@ pipeline {
         echo '${BUILD_URL}'
         echo "${BUILD_URL}"
 //        echo '${PROJECT_URL}'
-//        echo "${PROJECT_URL}"
+        echo '${JENKINS_URL}'
+        echo "${JENKINS_URL}"
+        echo "${PROJECT_URL}"
       }
     }
 
