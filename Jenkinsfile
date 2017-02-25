@@ -45,7 +45,6 @@ pipeline {
   post {
     success {
       echo 'Success'
-      mail to: "${DEFAULT_MAILER_TO_ADDRESS}", subject: "BUILD SUCCESS: ${currentBuild.fullDisplayName}", body: "Fix the build at ${JENKINS_URL}"
       // build '../downstream/master' // this works
     }
     failure {
