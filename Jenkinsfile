@@ -16,16 +16,7 @@ pipeline {
 
     stage('EnvTest') {
       steps {
-        echo '${DEFAULT_MAILER_TO_ADDRESS}'
-        echo "${DEFAULT_MAILER_TO_ADDRESS}"
-        echo '${env.DEFAULT_MAILER_TO_ADDRESS}'
-        echo "${env.DEFAULT_MAILER_TO_ADDRESS}"
-        echo '${currentBuild.fullDisplayName}'
-        echo "${currentBuild.fullDisplayName}"
-        echo '${BUILD_URL}'
-        echo "${BUILD_URL}"
-        echo '${JENKINS_URL}'
-        echo "${JENKINS_URL}"
+        mail to: '${DEFAULT_MAILER_TO_ADDRESS}', subject: 'BUILD SUCCESS: ${currentBuild.fullDisplayName}', body: 'Fix the build at ${JENKINS_URL}'
       }
     }
 
@@ -60,7 +51,7 @@ pipeline {
   post {
     success {
       echo 'Success'
-      mail to: ${DEFAULT_MAILER_TO_ADDRESS}, subject: 'BUILD SUCCESS: ${currentBuild.fullDisplayName}', body: 'Fix the build at ${BUILD_URL}'
+      mail to: '${DEFAULT_MAILER_TO_ADDRESS}', subject: 'BUILD SUCCESS: ${currentBuild.fullDisplayName}', body: 'Fix the build at ${JENKINS_URL}'
       // build '../downstream/master' // this works
     }
     failure {
