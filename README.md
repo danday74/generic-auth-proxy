@@ -1,7 +1,7 @@
 Bible API DBT server
 ====================
 
-[![Build Status](http://ctrl.worsheep.com:8080/buildStatus/icon?job=bible-server/master)](http://ctrl.worsheep.com:8080/job/bible-server/master)
+[![Build Status](http://ctrl.worsheep.com:8080/buildStatus/icon?job=bible-server/master&style=plastic)](http://ctrl.worsheep.com:8080)
 
 **Bible API server that relies on the Digital Bible Toolkit from [Digital Bible Platform](http://www.digitalbibleplatform.com)**
 
