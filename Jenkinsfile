@@ -24,10 +24,8 @@ pipeline {
         echo "${currentBuild.fullDisplayName}"
         echo '${BUILD_URL}'
         echo "${BUILD_URL}"
-//        echo '${PROJECT_URL}'
         echo '${JENKINS_URL}'
         echo "${JENKINS_URL}"
-        echo "${PROJECT_URL}"
       }
     }
 
