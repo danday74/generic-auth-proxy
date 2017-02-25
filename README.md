@@ -55,8 +55,9 @@ https://DOMAIN:52923
 
 If valid certs for **DOMAIN** are provided at
 
-/etc/letsencrypt/live/DOMAIN/privkey.pem<br>
-/etc/letsencrypt/live/DOMAIN/fullchain.pem<br>
-/etc/letsencrypt/live/DOMAIN/chain.pem
+/etc/ssl/letsencrypt/chain.pem<br>
+/etc/ssl/letsencrypt/fullchain.pem<br>
+/etc/ssl/letsencrypt/privkey.pem<br>
+/etc/ssl/letsencrypt/dhparam.pem
 
 [Lets Encrypt](https://letsencrypt.org) will generate these exact files for you for free!
