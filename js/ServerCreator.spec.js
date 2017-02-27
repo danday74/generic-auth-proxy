@@ -2,7 +2,7 @@ const chai = require('chai');
 const expect = chai.expect;
 const express = require('express');
 const app = express();
-const config = require('../bibleServer.config');
+const config = require('../authServer.config');
 const ServerCreator = require('./ServerCreator');
 
 describe('ServerCreator', () => {

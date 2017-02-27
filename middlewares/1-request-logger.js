@@ -1,4 +1,4 @@
-const config = require('../bibleServer.config');
+const config = require('../authServer.config');
 const Logger = require('../js/Logger');
 
 let middleware = (req, res, next) => {

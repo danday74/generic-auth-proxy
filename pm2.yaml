@@ -1,6 +1,6 @@
 ---
-- name: bible
-  script: bibleServer.js
+- name: auth
+  script: authServer.js
   instances: 0
   exec_mode: cluster
   # see http://pm2.keymetrics.io/docs/usage/application-declaration/#control-flow

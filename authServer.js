@@ -5,9 +5,12 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const app = express();
 const router = express.Router();
-const config = require('./bibleServer.config');
+const globby = require('globby');
+const proxy = require('express-http-proxy');
+const config = require('./authServer.config');
 const Logger = require('./js/Logger');
 const ServerCreator = require('./js/ServerCreator');
+const jwt = require('jsonwebtoken');
 
 let serverCreator = new ServerCreator(app);
 let httpServer = serverCreator.createHttpServer();
@@ -19,9 +22,33 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(require('./middlewares/1-request-logger'));
 
-require('./routes/bible/bible')(router);
+
+// Demands JWT auth on EVERY request except login requests
+app.use((req, res, next) => {
+  if (req.url === '/login') {
+    return next();
+  }
+  let token = req.cookies[config.jwt.cookieName];
+  if (!token) {
+    return res.sendStatus(401);
+  }
+  jwt.verify(token, config.jwt.secret, function (err) {
+    if (err) {
+      return res.sendStatus(401);
+    } else {
+      return next();
+    }
+  });
+});
+
+globby([`${appRoot}/routes/**/request.js`]).then((paths) => {
+  paths.forEach((path) => {
+    require(path)(router);
+  });
+});
 
 app.use('/', router);
+app.use('/', proxy(config.upstream));
 
 const HTTP_PORT = config.httpPort;
 httpServer.listen(HTTP_PORT, () => {

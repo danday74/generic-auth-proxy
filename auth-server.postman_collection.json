@@ -1,0 +1,64 @@
+{
+	"variables": [],
+	"info": {
+		"name": "auth-server",
+		"_postman_id": "4a77837c-8bb0-ddfc-5c24-b1bb9135a50d",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:51108/login",
+			"request": {
+				"url": "http://localhost:51108/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"alexxx\",\n\t\"password\": \"alexxx100\"\n}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:51108/authenticated",
+			"request": {
+				"url": "http://localhost:51108/authenticated",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:51108/logout",
+			"request": {
+				"url": "http://localhost:51108/logout",
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:51108/mb/random/777",
+			"request": {
+				"url": "http://localhost:51108/mb/random/777",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
