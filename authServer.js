@@ -21,10 +21,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(require('./middlewares/1-request-logger'));
-
+app.use(require('./middlewares/2-request-vars'));
 
 // Demands JWT auth on EVERY request except login requests
 app.use((req, res, next) => {
+  if (req.url === '/mock-validate-user' && config.mockValidateUserEnabled) {
+    return next();
+  }
   if (req.url === '/login') {
     return next();
   }

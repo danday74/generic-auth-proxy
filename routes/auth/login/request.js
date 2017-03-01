@@ -1,22 +1,29 @@
 const validator = require('./validator');
 const jwt = require('jsonwebtoken');
-const users = require('./users');
 const config = require(appRoot + '/authServer.config');
+const rp = require('request-promise');
 
 let route = router => {
   router.route('/login')
     .post(validator, (req, res) => {
 
-      let username = req.body.username;
-      let password = req.body.password;
-      let user = users.find((usr) => {
-        return usr.username.toLowerCase() === username.toLowerCase();
-      });
+      // NOTE: Switch to real endpoint when available
+      // AND set config.mockValidateUserEnabled to false
+      let options = {
+        method: 'POST',
+        url: `${req.php}/mock-validate-user`,
+        body: {
+          username: req.body.username,
+          password: req.body.password
+        },
+        json: true,
+        resolveWithFullResponse: true
+      };
 
-      let authenticated = user != null && user.password === password;
-      let responseCode = (authenticated) ? 200 : 401;
+      rp(options).then((response) => {
 
-      if (authenticated) {
+        let user = response.body;
+
         let token = jwt.sign(user, config.jwt.secret, {
           expiresIn: config.jwt.expiresIn
         });
@@ -24,9 +31,15 @@ let route = router => {
           maxAge: config.jwt.expiresIn,
           httpOnly: true
         });
-      }
 
-      return res.sendStatus(responseCode);
+        return res.sendStatus(response.statusCode);
+
+      }).catch((err) => {
+
+        let statusCode = (err.statusCode && err.statusCode > 0) ? err.statusCode : 401;
+        return res.sendStatus(statusCode);
+
+      });
 
     });
 };
