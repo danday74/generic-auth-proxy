@@ -4,6 +4,8 @@ Phase 1
 * Make version of this project which is a template
 * THEN build the real thing on the template
 
+* Put enforcement to 100
+
 Phase 2
 =======
 
