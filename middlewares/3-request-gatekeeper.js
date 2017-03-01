@@ -2,11 +2,10 @@ const jwt = require('jsonwebtoken');
 const config = require('../authServer.config');
 
 let middleware = (req, res, next) => {
-  console.log(req.url);
-  if (req.url === '/login') {
+  if (req.url === '/login' && req.method === 'POST') {
     return next();
   }
-  if (req.url === '/mock-validate-user') {
+  if (req.url === '/mock-validate-user' && req.method === 'POST') {
     return next();
   }
   let token = req.cookies[config.jwt.cookieName];
