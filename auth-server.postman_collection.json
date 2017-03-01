@@ -21,7 +21,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"username\": \"alexxx\",\n\t\"password\": \"alexxx100\"\n}\n"
+					"raw": "{\n  \"username\": \"alexxx\",\n  \"password\": \"alexxx100\"\n}\n"
 				},
 				"description": ""
 			},
@@ -56,6 +56,26 @@
 				"method": "GET",
 				"header": [],
 				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:51108/mock-validate-user",
+			"request": {
+				"url": "http://localhost:51108/mock-validate-user",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"alexxx\",\n  \"password\": \"alexxx100\"\n}\n"
+				},
 				"description": ""
 			},
 			"response": []
