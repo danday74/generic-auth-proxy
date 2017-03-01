@@ -1,4 +1,4 @@
-describe('/authenticated', () => {
+describe('/login', () => {
 
   it('should respond 200', () => {
   });
