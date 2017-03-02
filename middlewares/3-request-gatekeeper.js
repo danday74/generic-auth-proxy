@@ -12,10 +12,13 @@ let middleware = (req, res, next) => {
   if (!token) {
     return res.sendStatus(401);
   }
-  jwt.verify(token, config.jwt.secret, function (err) {
+
+  // noinspection Eslint
+  jwt.verify(token, config.jwt.secret, function (err, decoded) {
     if (err) {
       return res.sendStatus(401);
     } else {
+      // console.log(decoded);
       return next();
     }
   });
