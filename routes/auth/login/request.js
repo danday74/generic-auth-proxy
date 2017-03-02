@@ -29,7 +29,8 @@ let route = router => {
         });
         res.cookie(config.jwt.cookieName, token, {
           maxAge: config.jwt.expiresIn,
-          httpOnly: true
+          httpOnly: true,
+          secure: req.secure
         });
 
         return res.sendStatus(response.statusCode);

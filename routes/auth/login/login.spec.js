@@ -1,4 +1,5 @@
 const Imp = require('../_classes/TestImports');
+const jwt = require('jsonwebtoken');
 
 const VALID_USERNAME = 'alexxx';
 const VALID_PASSWORD = 'alexxx100';
@@ -6,6 +7,8 @@ const VALID_CREDENTIALS = {
   username: VALID_USERNAME,
   password: VALID_PASSWORD
 };
+
+const user = require(`${Imp.UTDATA}/auth/login/user.json`);
 
 describe('/login', () => {
 
@@ -90,20 +93,75 @@ describe('/login', () => {
       });
   });
 
-  it('should respond 401 where username does not exist', (done) => {
-
-    let credentials = {username: 'nonexistentusername', password: VALID_PASSWORD};
+  it('should reverse proxy the status code of an upstream failure', (done) => {
 
     let nocker = Imp.nock
-      .post(/validate-user$/, credentials)
+      .post(/validate-user$/, VALID_CREDENTIALS)
       .reply(401);
 
     Imp.agent
       .post('/login')
-      .send(credentials)
+      .send(VALID_CREDENTIALS)
       .expect(401, (err) => {
         nocker.done();
         done(err);
+      });
+  });
+
+  it('should reverse proxy the status code of an upstream success and set the JWT cookie', (done) => {
+
+    let nocker = Imp.nock
+      .post(/validate-user$/, VALID_CREDENTIALS)
+      .reply(200, user);
+
+    Imp.agent
+      .post('/login')
+      .send(VALID_CREDENTIALS)
+      .expect(200, (err, res) => {
+
+        let jwtCookie = res.headers['set-cookie'][0];
+        let jwtCookieRegex = '^twj=.*?; Max-Age=.*?; Path=\/; Expires=.*?; HttpOnly';
+        if (res.request.protocol.includes('https')) {
+          jwtCookieRegex += '; Secure$';
+        }
+        Imp.expect(jwtCookie).to.match(new RegExp(jwtCookieRegex));
+
+        nocker.done();
+        done(err);
+      });
+  });
+
+  it('should decode the JWT to retrieve user data', (done) => {
+
+    let nocker = Imp.nock
+      .post(/validate-user$/, VALID_CREDENTIALS)
+      .reply(200, user);
+
+    Imp.agent
+      .post('/login')
+      .send(VALID_CREDENTIALS)
+      .expect(200, (err, res) => {
+
+        if (err) done(err);
+
+        let token = res.headers['set-cookie'][0].split(';')[0].replace('twj=', '');
+
+        jwt.verify(token, Imp.cfg.jwt.secret, function (err, decoded) {
+
+          Imp.expect(decoded).to.have.property('admin', user.admin);
+          Imp.expect(decoded).to.have.property('email', user.email);
+          Imp.expect(decoded).to.have.property('username', user.username);
+          Imp.expect(decoded).to.have.property('iat');
+          Imp.expect(decoded).to.have.property('exp');
+
+          let expiresIn = decoded.exp - decoded.iat;
+          Imp.expect(expiresIn).to.eql(Imp.cfg.jwt.expiresIn);
+
+          done(err);
+        });
+
+        nocker.done();
+
       });
   });
 
