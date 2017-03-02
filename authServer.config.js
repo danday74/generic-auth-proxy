@@ -17,7 +17,8 @@ let config = {
     expiresIn: 86400, // 24 hours
     cookieName: 'twj'
   },
-  upstream: 'http://localhost:2020'
+  upstream: 'http://localhost:2020',
+  nockHost: 'localhost'
 };
 
 module.exports = config;

@@ -1,6 +1,4 @@
-const supertest = require('supertest');
-const server = require(appRoot + '/authServer');
-const agent = supertest.agent(server);
+const Imp = require('../_classes/TestImports');
 
 const VALID_USERNAME = 'alexxx';
 const VALID_PASSWORD = 'alexxx100';
@@ -13,7 +11,7 @@ describe('/login', () => {
 
   it('should respond 400 where no username is given', (done) => {
 
-    agent
+    Imp.agent
       .post('/login')
       .send({password: VALID_PASSWORD})
       .expect(400, (err) => {
@@ -23,7 +21,7 @@ describe('/login', () => {
 
   it('should respond 400 where username is too short', (done) => {
 
-    agent
+    Imp.agent
       .post('/login')
       .send({username: 'short', password: VALID_PASSWORD})
       .expect(400, (err) => {
@@ -33,7 +31,7 @@ describe('/login', () => {
 
   it('should respond 400 where username is too long', (done) => {
 
-    agent
+    Imp.agent
       .post('/login')
       .send({username: 'thisusernameisfarfartoolong', password: VALID_PASSWORD})
       .expect(400, (err) => {
@@ -43,7 +41,7 @@ describe('/login', () => {
 
   it('should respond 400 where username contains non alphanumeric chars', (done) => {
 
-    agent
+    Imp.agent
       .post('/login')
       .send({username: 'ale-xxx', password: VALID_PASSWORD})
       .expect(400, (err) => {
@@ -54,7 +52,7 @@ describe('/login', () => {
 
   it('should respond 400 where no password is given', (done) => {
 
-    agent
+    Imp.agent
       .post('/login')
       .send({username: VALID_USERNAME})
       .expect(400, (err) => {
@@ -64,7 +62,7 @@ describe('/login', () => {
 
   it('should respond 400 where password is too short', (done) => {
 
-    agent
+    Imp.agent
       .post('/login')
       .send({username: VALID_USERNAME, password: 'short'})
       .expect(400, (err) => {
@@ -74,7 +72,7 @@ describe('/login', () => {
 
   it('should respond 400 where password is too long', (done) => {
 
-    agent
+    Imp.agent
       .post('/login')
       .send({username: VALID_USERNAME, password: 'thispasswordisfarfartoolong'})
       .expect(400, (err) => {
@@ -84,7 +82,7 @@ describe('/login', () => {
 
   it('should respond 400 where password contains non alphanumeric chars', (done) => {
 
-    agent
+    Imp.agent
       .post('/login')
       .send({username: VALID_USERNAME, password: 'ale-xxx100'})
       .expect(400, (err) => {
@@ -92,23 +90,19 @@ describe('/login', () => {
       });
   });
 
-
   it('should respond 401 where username does not exist', (done) => {
 
-    agent
-      .post('/login')
-      .send({username: 'nonexistentusername', password: VALID_PASSWORD})
-      .expect(401, (err) => {
-        done(err);
-      });
-  });
+    let credentials = {username: 'nonexistentusername', password: VALID_PASSWORD};
 
-  it('should respond 401 where password is wrong', (done) => {
+    let nocker = Imp.nock
+      .post(/validate-user$/, credentials)
+      .reply(401);
 
-    agent
+    Imp.agent
       .post('/login')
-      .send({username: VALID_USERNAME, password: 'wrongpassword'})
+      .send(credentials)
       .expect(401, (err) => {
+        nocker.done();
         done(err);
       });
   });

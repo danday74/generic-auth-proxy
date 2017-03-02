@@ -26,7 +26,6 @@ app.use(require('./middlewares/2-request-vars'));
 app.use(require('./middlewares/3-request-gatekeeper'));
 
 
-
 globby([`${appRoot}/routes/auth/**/request.js`]).then((paths) => {
   paths.forEach((path) => {
     require(path)(router);
@@ -41,8 +40,6 @@ app.use('/', router);
 app.use('/', proxy(config.upstream));
 
 
-
-
 const HTTP_PORT = config.httpPort;
 httpServer.listen(HTTP_PORT, () => {
   /* istanbul ignore next */
@@ -55,4 +52,7 @@ httpsServer && httpsServer.listen(HTTPS_PORT, () => {
   config.logging && console.log(`${Logger.getTimestamp()} ==================== HTTPS server listening on port ${HTTPS_PORT} with certs from ${config.certDir}`);
 });
 
-module.exports = httpServer;
+module.exports = {
+  http: httpServer,
+  https: httpsServer
+};
