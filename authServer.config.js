@@ -6,7 +6,7 @@ let config = {
   httpPort: (testRun) ? 41108 : /* istanbul ignore next */ 51108,
   httpsPort: (testRun) ? 41109 : /* istanbul ignore next */ 51109,
 
-  mockValidateUserEnabled: true,
+  mockValidateUserEnabled: false,
   proxy: process.env.HTTP_PROXY || /* istanbul ignore next */ process.env.http_proxy
   || /* istanbul ignore next */ process.env.HTTPS_PROXY || /* istanbul ignore next */ process.env.https_proxy,
   timeout: {
