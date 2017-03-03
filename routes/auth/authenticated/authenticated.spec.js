@@ -1,9 +1,80 @@
+const Imp = require('../_classes/TestImports');
+const cookie = require('cookie');
+
+const VALID_USERNAME = 'alexxx';
+const VALID_PASSWORD = 'alexxx100';
+const VALID_CREDENTIALS = {
+  username: VALID_USERNAME,
+  password: VALID_PASSWORD
+};
+
+const user = require(`${Imp.UTDATA}/auth/login/user.json`);
+
 describe('/authenticated', () => {
 
-  it('should respond 200', () => {
+  it('should respond 401 where an invalid JWT token is given', (done) => {
+
+    let nocker = Imp.nock
+      .post(/validate-user$/, VALID_CREDENTIALS)
+      .reply(200, user);
+
+    Imp.agent
+      .post('/login')
+      .send(VALID_CREDENTIALS)
+      .expect(200, (err) => {
+
+        nocker.done();
+        if (err) done(err);
+
+        let jwtBrokenCookie = cookie.serialize(Imp.cfg.jwt.cookieName, 'invalid');
+
+        Imp.agent
+          .get('/authenticated')
+          .set('Cookie', jwtBrokenCookie)
+          .expect(401, (err) => {
+            done(err);
+          });
+
+      });
   });
 
-  it('should respond 401', () => {
+  it('should respond 200 where a valid JWT token is given', (done) => {
+
+    let nocker = Imp.nock
+      .post(/validate-user$/, VALID_CREDENTIALS)
+      .reply(200, user);
+
+    Imp.agent
+      .post('/login')
+      .send(VALID_CREDENTIALS)
+      .expect(200, (err) => {
+
+        nocker.done();
+        if (err) done(err);
+
+        Imp.agent
+          .get('/authenticated')
+          .expect(200, (err) => {
+            done(err);
+          });
+
+      });
+  });
+
+  it('should respond 401 where no JWT cookie exists', (done) => {
+
+    Imp.agent
+      .post('/logout')
+      .expect(200, (err) => {
+        if (err) done(err);
+
+        Imp.agent
+          .get('/authenticated')
+          .expect(401, (err) => {
+            done(err);
+          });
+
+      });
   });
 
   // describe('Success', () => {

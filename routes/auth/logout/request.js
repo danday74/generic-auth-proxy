@@ -7,7 +7,8 @@ let route = router => {
 
       res.cookie(config.jwt.cookieName, '', {
         maxAge: 0,
-        httpOnly: true
+        httpOnly: true,
+        secure: req.secure
       });
 
       return res.sendStatus(200);

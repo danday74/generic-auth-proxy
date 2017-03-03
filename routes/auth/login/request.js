@@ -17,6 +17,7 @@ let route = router => {
           password: req.body.password
         },
         json: true,
+        timeout: config.timeout.upstream,
         resolveWithFullResponse: true
       };
 
@@ -37,7 +38,11 @@ let route = router => {
 
       }).catch((err) => {
 
-        let statusCode = (err.statusCode && err.statusCode > 0) ? err.statusCode : 401;
+        let statusCode;
+        if (err.statusCode) statusCode = err.statusCode;
+        else if (err.message.includes('ESOCKETTIMEDOUT')) statusCode = 408;
+        else statusCode = 500;
+
         return res.sendStatus(statusCode);
 
       });

@@ -1,5 +1,6 @@
 const Imp = require('../_classes/TestImports');
 const jwt = require('jsonwebtoken');
+const cookie = require('cookie');
 
 const VALID_USERNAME = 'alexxx';
 const VALID_PASSWORD = 'alexxx100';
@@ -12,85 +13,53 @@ const user = require(`${Imp.UTDATA}/auth/login/user.json`);
 
 describe('/login', () => {
 
-  it('should respond 400 where no username is given', (done) => {
+  let credentialsObjs = [
+    {
+      testName: 'no username is given',
+      credentials: {password: VALID_PASSWORD}
+    },
+    {
+      testName: 'username is too short',
+      credentials: {username: 'short', password: VALID_PASSWORD}
+    },
+    {
+      testName: 'username is too long',
+      credentials: {username: 'thisusernameisfarfartoolong', password: VALID_PASSWORD}
+    },
+    {
+      testName: 'username contains non alphanumeric chars',
+      credentials: {username: 'ale-xxx', password: VALID_PASSWORD}
+    },
+    {
+      testName: 'no password is given',
+      credentials: {username: VALID_USERNAME}
+    },
+    {
+      testName: 'password is too short',
+      credentials: {username: VALID_USERNAME, password: 'short'}
+    },
+    {
+      testName: 'password is too long',
+      credentials: {username: VALID_USERNAME, password: 'thispasswordisfarfartoolong'}
+    },
+    {
+      testName: 'password contains non alphanumeric chars',
+      credentials: {username: VALID_USERNAME, password: 'ale-xxx100'}
+    }
+  ];
 
-    Imp.agent
-      .post('/login')
-      .send({password: VALID_PASSWORD})
-      .expect(400, (err) => {
-        done(err);
-      });
-  });
+  Imp.using(credentialsObjs, () => {
 
-  it('should respond 400 where username is too short', (done) => {
+    it('should respond 400 where {testName}', (testObj, done) => {
 
-    Imp.agent
-      .post('/login')
-      .send({username: 'short', password: VALID_PASSWORD})
-      .expect(400, (err) => {
-        done(err);
-      });
-  });
+      Imp.agent
+        .post('/login')
+        .send(testObj.credentials)
+        .expect(400, (err) => {
+          done(err);
+        });
+    });
 
-  it('should respond 400 where username is too long', (done) => {
-
-    Imp.agent
-      .post('/login')
-      .send({username: 'thisusernameisfarfartoolong', password: VALID_PASSWORD})
-      .expect(400, (err) => {
-        done(err);
-      });
-  });
-
-  it('should respond 400 where username contains non alphanumeric chars', (done) => {
-
-    Imp.agent
-      .post('/login')
-      .send({username: 'ale-xxx', password: VALID_PASSWORD})
-      .expect(400, (err) => {
-        done(err);
-      });
-  });
-
-
-  it('should respond 400 where no password is given', (done) => {
-
-    Imp.agent
-      .post('/login')
-      .send({username: VALID_USERNAME})
-      .expect(400, (err) => {
-        done(err);
-      });
-  });
-
-  it('should respond 400 where password is too short', (done) => {
-
-    Imp.agent
-      .post('/login')
-      .send({username: VALID_USERNAME, password: 'short'})
-      .expect(400, (err) => {
-        done(err);
-      });
-  });
-
-  it('should respond 400 where password is too long', (done) => {
-
-    Imp.agent
-      .post('/login')
-      .send({username: VALID_USERNAME, password: 'thispasswordisfarfartoolong'})
-      .expect(400, (err) => {
-        done(err);
-      });
-  });
-
-  it('should respond 400 where password contains non alphanumeric chars', (done) => {
-
-    Imp.agent
-      .post('/login')
-      .send({username: VALID_USERNAME, password: 'ale-xxx100'})
-      .expect(400, (err) => {
-        done(err);
-      });
   });
 
   it('should reverse proxy the status code of an upstream failure', (done) => {
@@ -108,6 +77,37 @@ describe('/login', () => {
       });
   });
 
+  it('should handle an upstream error', (done) => {
+
+    let nocker = Imp.nock
+      .post(/validate-user$/, VALID_CREDENTIALS)
+      .replyWithError('oopsie');
+
+    Imp.agent
+      .post('/login')
+      .send(VALID_CREDENTIALS)
+      .expect(500, (err) => {
+        nocker.done();
+        done(err);
+      });
+  });
+
+  it('should handle an upstream timeout', (done) => {
+
+    let nocker = Imp.nock
+      .post(/validate-user$/, VALID_CREDENTIALS)
+      .socketDelay(Imp.cfg.timeout.upstream + 1000)
+      .reply(200, user);
+
+    Imp.agent
+      .post('/login')
+      .send(VALID_CREDENTIALS)
+      .expect(408, (err) => {
+        nocker.done();
+        done(err);
+      });
+  });
+
   it('should reverse proxy the status code of an upstream success and set the JWT cookie', (done) => {
 
     let nocker = Imp.nock
@@ -119,12 +119,19 @@ describe('/login', () => {
       .send(VALID_CREDENTIALS)
       .expect(200, (err, res) => {
 
-        let jwtCookie = res.headers['set-cookie'][0];
-        let jwtCookieRegex = '^twj=.*?; Max-Age=.*?; Path=\/; Expires=.*?; HttpOnly';
+        let jwtCookieStr = res.headers['set-cookie'][0];
+        let jwtCookieObj = cookie.parse(jwtCookieStr);
+
+        Imp.expect(jwtCookieObj).to.have.property('twj');
+        Imp.expect(jwtCookieObj).to.have.property('Max-Age');
+        Imp.expect(jwtCookieObj).to.have.property('Path', '/');
+        Imp.expect(jwtCookieObj).to.have.property('Expires');
+        Imp.expect(jwtCookieObj.twj).to.not.be.empty;
+
+        Imp.expect(jwtCookieStr).to.contain('HttpOnly');
         if (res.request.protocol.includes('https')) {
-          jwtCookieRegex += '; Secure$';
+          Imp.expect(jwtCookieStr).to.contain('Secure');
         }
-        Imp.expect(jwtCookie).to.match(new RegExp(jwtCookieRegex));
 
         nocker.done();
         done(err);
@@ -142,9 +149,12 @@ describe('/login', () => {
       .send(VALID_CREDENTIALS)
       .expect(200, (err, res) => {
 
+        nocker.done();
         if (err) done(err);
 
-        let token = res.headers['set-cookie'][0].split(';')[0].replace('twj=', '');
+        let jwtCookieStr = res.headers['set-cookie'][0];
+        let jwtCookieObj = cookie.parse(jwtCookieStr);
+        let token = jwtCookieObj.twj;
 
         jwt.verify(token, Imp.cfg.jwt.secret, function (err, decoded) {
 
@@ -159,8 +169,6 @@ describe('/login', () => {
 
           done(err);
         });
-
-        nocker.done();
 
       });
   });
