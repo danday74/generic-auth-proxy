@@ -2,6 +2,7 @@ const Imp = require('../_classes/TestImports');
 const jwt = require('jsonwebtoken');
 
 describe('/login', () => {
+
   describe('Success', () => {
 
     it('should respond with proxied status code where upstream \'validate user\' response is 2xx and set the JWT cookie', (done) => {
