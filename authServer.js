@@ -32,6 +32,7 @@ globby([`${appRoot}/routes/auth/**/request.js`]).then((paths) => {
   });
 });
 
+/* istanbul ignore next */
 if (config.mockValidateUserEnabled) {
   require(`${appRoot}/routes/mock/mock-validate-user/request.js`)(router);
 }
