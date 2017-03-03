@@ -13,10 +13,17 @@ chai.use(sinonChai);
 
 // others
 const cfg = require(appRoot + '/authServer.config');
+const cookie = require('cookie');
 const nock = require('nock')(new RegExp(cfg.nockHost));
 const using = require('data-driven');
 
-const UTDATA = appRoot + '/utdata';
+const VALID_USERNAME = 'alexxx';
+const VALID_PASSWORD = 'alexxx100';
+const VALID_CREDENTIALS = {
+  username: VALID_USERNAME,
+  password: VALID_PASSWORD
+};
+const user = require(appRoot + '/utdata/auth/login/user.json');
 
 let TestImports = {
   agent,
@@ -25,7 +32,11 @@ let TestImports = {
   nock,
   using,
   cfg,
-  UTDATA
+  cookie,
+  VALID_USERNAME,
+  VALID_PASSWORD,
+  VALID_CREDENTIALS,
+  user
 };
 
 module.exports = TestImports;
