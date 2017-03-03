@@ -37,8 +37,6 @@
     "mocha": "^3.2.0",
     "nock": "^9.0.9",
     "npm-run-all": "^4.0.2",
-    "sinon": "^1.17.7",
-    "sinon-chai": "^2.8.0",
     "supertest": "^3.0.0"
   },
   "engine": "node >= 6.10.0"
