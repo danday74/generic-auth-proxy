@@ -1,7 +1,7 @@
-const badRequestObjs = require(appRoot + '/routes/auth/_classes/badRequestObjs');
-const Imp = require(appRoot + '/routes/auth/_classes/TestImports');
+const badRequestObjs = require(appRoot + '/routes/_classes/badRequestObjs');
+const Imp = require(appRoot + '/routes/_classes/TestImports');
 
-(Imp.cfg.mockValidateUserEnabled ? describe : describe.skip)('/mock-validate-user', () => {
+describe('/mock-validate-user', () => {
 
   describe('Success', () => {
 

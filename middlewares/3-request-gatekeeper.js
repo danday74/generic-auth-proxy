@@ -5,6 +5,7 @@ let middleware = (req, res, next) => {
   if (req.url === '/login' && req.method === 'POST') {
     return next();
   }
+  /* istanbul ignore next */
   if (req.url === '/mock-validate-user' && req.method === 'POST') {
     return next();
   }

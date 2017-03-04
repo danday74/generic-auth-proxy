@@ -1,4 +1,4 @@
-const Imp = require('../_classes/TestImports');
+const Imp = require(appRoot + '/routes/_classes/TestImports');
 
 describe('/logout', () => {
 
