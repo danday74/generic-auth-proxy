@@ -1,6 +1,6 @@
 // agent
 const supertest = require('supertest');
-const server = require(appRoot + '/authServer').http;
+const server = require(appRoot + '/authServer').https;
 const agent = supertest.agent(server);
 
 // expect
