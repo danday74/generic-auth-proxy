@@ -8,7 +8,7 @@
     "start": "nodemon authServer.js",
     "forever": "pm2 start pm2.yaml",
     "test": "node conditionalTest",
-    "enforcer": "./node_modules/.bin/istanbul check-coverage --statement 100 --branch 100 --function 100 --line 100",
+    "enforcer": "./node_modules/.bin/istanbul check-coverage --statement 97 --branch 97 --function 97 --line 97",
     "build": "npm-run-all test enforcer",
     "postinstall": "test -d .git && cp gitHookPrePush.sh .git/hooks/pre-push || true"
   },
