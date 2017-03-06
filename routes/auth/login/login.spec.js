@@ -57,7 +57,7 @@ describe('/login', () => {
           let jwtCookieObj = Imp.cookie.parse(jwtCookieStr);
           let token = jwtCookieObj[Imp.cfg.jwt.cookieName];
 
-          jwt.verify(token, Imp.cfg.jwt.secret, function (err, decoded) {
+          jwt.verify(token, Imp.cfg.jwt.secret, (err, decoded) => {
 
             if (err) done(err);
 
