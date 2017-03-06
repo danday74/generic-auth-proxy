@@ -16,7 +16,7 @@ let route = router => {
       if (authenticated) {
         let userclone = JSON.parse(JSON.stringify(user));
         delete userclone.password;
-        return res.status(200).send(userclone);
+        return res.status(200).json(userclone);
       } else {
         return res.sendStatus(401);
       }
