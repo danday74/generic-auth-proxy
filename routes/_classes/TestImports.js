@@ -11,6 +11,7 @@ const expect = chai.expect;
 const cfg = require(appRoot + '/authServer.config');
 const cookie = require('cookie');
 const nock = require('nock')(new RegExp(cfg.nockHost));
+const nockUpstream = require('nock')(new RegExp(cfg.upstream.split(':')[1].replace('//', '')));
 const user = require(appRoot + '/test/utdata/auth/login/user.json');
 const using = require('data-driven');
 
@@ -27,6 +28,7 @@ let TestImports = {
   cfg,
   cookie,
   nock,
+  nockUpstream,
   user,
   using,
   VALID_USERNAME,
