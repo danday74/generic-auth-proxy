@@ -79,7 +79,7 @@ describe('/authenticated', () => {
         });
     });
 
-    it('should respond 401 where JWT token is invalid', (done) => {
+    it('should respond 401 where JWT cookie is invalid', (done) => {
 
       let jwtInvalidCookie = Imp.cookie.serialize(Imp.cfg.jwt.cookieName, 'invalid');
 
