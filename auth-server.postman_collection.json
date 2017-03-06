@@ -21,7 +21,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"username\": \"alexxx\",\n\t\"password\": \"alexxx100\"\n}\n"
+					"raw": "{\n  \"username\": \"alexxx\",\n  \"password\": \"alexxx100\"\n}\n"
 				},
 				"description": ""
 			},
@@ -76,6 +76,17 @@
 					"mode": "raw",
 					"raw": "{\n  \"username\": \"alexxx\",\n  \"password\": \"alexxx100\"\n}\n"
 				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:51108/whoami",
+			"request": {
+				"url": "http://localhost:51108/authenticated",
+				"method": "GET",
+				"header": [],
+				"body": {},
 				"description": ""
 			},
 			"response": []
