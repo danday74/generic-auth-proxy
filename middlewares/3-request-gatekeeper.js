@@ -14,8 +14,7 @@ let middleware = (req, res, next) => {
     return res.sendStatus(401);
   }
 
-  // noinspection Eslint, JSUnusedLocalSymbols
-  jwt.verify(token, config.jwt.secret, function (err, decoded) {
+  jwt.verify(token, config.jwt.secret, function (err /*, decoded*/) {
     if (err) {
       return res.sendStatus(401);
     } else {
