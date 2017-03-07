@@ -1,9 +1,4 @@
 Phase 1
 =======
 
-* dunno
-
-Phase 2
-=======
-
-* dunno
+* lock down node modules with yarn
