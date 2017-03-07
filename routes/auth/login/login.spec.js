@@ -1,6 +1,6 @@
+const jwt = require('jsonwebtoken');
 const badRequestObjs = require(appRoot + '/routes/_classes/badRequestObjs');
 const Imp = require(appRoot + '/routes/_classes/TestImports');
-const jwt = require('jsonwebtoken');
 
 describe('/login', () => {
 
