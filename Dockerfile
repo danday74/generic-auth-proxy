@@ -4,8 +4,10 @@
 # docker push ${IMAGE}
 
 FROM node:6.10.0
-EXPOSE 51108 # http
-EXPOSE 51109 # https
+# http
+EXPOSE 51108
+# https
+EXPOSE 51109
 
 ENV wd /usr/src/app
 ENV wds /usr/src/app/
