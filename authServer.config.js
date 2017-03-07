@@ -5,20 +5,17 @@ let config = {
   certDir: '/etc/ssl/letsencrypt',
   httpPort: (testRun) ? 41108 : /* istanbul ignore next */ 51108,
   httpsPort: (testRun) ? 41109 : /* istanbul ignore next */ 51109,
-
+  jwt: {
+    cookieName: 'twj',
+    expiresIn: 86400, // 24 hours
+    secret: 'FLEDFRINTSTONE'
+  },
   mockValidateUserEnabled: true,
-  proxy: process.env.HTTP_PROXY || /* istanbul ignore next */ process.env.http_proxy
-  || /* istanbul ignore next */ process.env.HTTPS_PROXY || /* istanbul ignore next */ process.env.https_proxy,
+  nockHost: 'localhost',
   timeout: {
     upstream: 9000
   },
-  jwt: {
-    secret: 'FLEDFRINTSTONE',
-    expiresIn: 86400, // 24 hours
-    cookieName: 'twj'
-  },
-  upstream: 'http://localhost:2020',
-  nockHost: 'localhost'
+  upstream: 'http://localhost:2020'
 };
 
 module.exports = config;
