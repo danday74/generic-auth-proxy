@@ -10,9 +10,9 @@ let route = router => {
       let token = req.cookies[config.jwt.cookieName];
       jwt.verify(token, config.jwt.secret, (err, decoded) => {
 
-        const properties = ['username', 'email'];
+        let properties = ['username', 'email'];
 
-        const restrictedUser = Object.keys(decoded)
+        let restrictedUser = Object.keys(decoded)
           .filter(key => properties.includes(key))
           .reduce((obj, key) => {
             obj[key] = decoded[key];
