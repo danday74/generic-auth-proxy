@@ -88,7 +88,7 @@ describe('/login', () => {
 
   describe('Failure', () => {
 
-    it('should respond with proxied status code where \'validate user\' response is non-2xx', (done) => {
+    it('should respond with proxied status code where upstream \'validate user\' response is non-2xx', (done) => {
 
       let nocker = Imp.nock
         .post(/validate-user$/, Imp.VALID_CREDENTIALS)
@@ -103,7 +103,7 @@ describe('/login', () => {
         });
     });
 
-    it('should respond 500 where \'validate user\' request errors', (done) => {
+    it('should respond 500 where upstream \'validate user\' request errors', (done) => {
 
       let nocker = Imp.nock
         .post(/validate-user$/, Imp.VALID_CREDENTIALS)
@@ -118,7 +118,7 @@ describe('/login', () => {
         });
     });
 
-    it('should respond 408 where \'validate user\' request times out', (done) => {
+    it('should respond 408 where upstream \'validate user\' request times out', (done) => {
 
       let nocker = Imp.nock
         .post(/validate-user$/, Imp.VALID_CREDENTIALS)
