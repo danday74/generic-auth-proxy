@@ -1,4 +1,4 @@
 Phase 1
 =======
 
-* write docker run statement in Dockerfile
+* Set upstream endpoint in config file
