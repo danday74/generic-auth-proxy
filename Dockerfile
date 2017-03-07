@@ -12,7 +12,7 @@ EXPOSE 51109
 ENV wd /usr/src/app
 ENV wds /usr/src/app/
 
-RUN npm i -g yarn
+# RUN npm i -g yarn # yarn is now pre-installed
 RUN yarn global add pm2
 
 RUN mkdir -p ${wd}
