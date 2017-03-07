@@ -33,7 +33,7 @@ describe('/authenticated', () => {
         });
     });
 
-    it('should proxy requests upstream where user is authorised', (done) => {
+    it('should reverse proxy requests upstream where user is authorised', (done) => {
 
       let nocker1 = Imp.nock
         .post(/validate-user$/, Imp.VALID_CREDENTIALS)
