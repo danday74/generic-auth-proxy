@@ -1,5 +1,5 @@
-const validator = require('./validator');
 const config = require(appRoot + '/authServer.config');
+const validator = require('./validator');
 
 let route = router => {
   router.route('/logout')
@@ -10,9 +10,7 @@ let route = router => {
         httpOnly: true,
         secure: req.secure
       });
-
       return res.sendStatus(200);
-
     });
 };
 
