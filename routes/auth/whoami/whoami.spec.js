@@ -5,7 +5,7 @@ describe('/whoami', () => {
 
   describe('Success', () => {
 
-    it('should respond 200 with restricted user data where user is authorised', (done) => {
+    it('should respond 200 with a subset of user data where user is authorised', (done) => {
 
       let nocker = Imp.nock
         .post(/validate-user$/, Imp.VALID_CREDENTIALS)
