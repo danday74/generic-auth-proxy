@@ -20,11 +20,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 
-
 app.use(require('./middlewares/1-request-logger'));
 app.use(require('./middlewares/2-request-vars'));
 app.use(require('./middlewares/3-request-gatekeeper'));
-
 
 globby([`${appRoot}/routes/auth/**/request.js`]).then((paths) => {
   paths.forEach((path) => {
@@ -39,7 +37,6 @@ if (config.mockValidateUserEnabled) {
 
 app.use('/', router);
 app.use('/', proxy(config.upstream));
-
 
 const HTTP_PORT = config.httpPort;
 httpServer.listen(HTTP_PORT, () => {
