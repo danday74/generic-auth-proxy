@@ -1,7 +1,7 @@
-const validator = require('./validator');
 const jwt = require('jsonwebtoken');
-const config = require(appRoot + '/authServer.config');
 const rp = require('request-promise');
+const config = require(appRoot + '/authServer.config');
+const validator = require('./validator');
 
 let route = router => {
   router.route('/login')
@@ -17,8 +17,8 @@ let route = router => {
           password: req.body.password
         },
         json: true,
-        timeout: config.timeout.upstream,
-        resolveWithFullResponse: true
+        resolveWithFullResponse: true,
+        timeout: config.timeout.upstream
       };
 
       rp(options).then((response) => {
@@ -44,9 +44,7 @@ let route = router => {
         else statusCode = 500;
 
         return res.sendStatus(statusCode);
-
       });
-
     });
 };
 
