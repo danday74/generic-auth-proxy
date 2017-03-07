@@ -103,5 +103,74 @@ describe('/authenticated', () => {
             });
         });
     });
+
+    it('should respond 500 where user is authorised but a proxied upstream request errors', (done) => {
+
+      let nocker1 = Imp.nock
+        .post(/validate-user$/, Imp.VALID_CREDENTIALS)
+        .reply(200, Imp.user);
+
+      let nocker2 = Imp.nockUpstream
+        .post(/anything-else$/)
+        .replyWithError('oopsie');
+
+      Imp.agent
+        .post('/login')
+        .send(Imp.VALID_CREDENTIALS)
+        .expect(200, (err) => {
+
+          nocker1.done();
+          if (err) done(err);
+
+          Imp.agent
+            .post('/anything-else')
+            .expect(500, (err) => {
+
+              nocker2.done();
+              if (err) done(err);
+
+              Imp.agent
+                .post('/logout')
+                .expect(200, (err) => {
+                  done(err);
+                });
+            });
+        });
+    });
+
+    it('should respond 504 where user is authorised but a proxied upstream request times out', (done) => {
+
+      let nocker1 = Imp.nock
+        .post(/validate-user$/, Imp.VALID_CREDENTIALS)
+        .reply(200, Imp.user);
+
+      let nocker2 = Imp.nockUpstream
+        .post(/anything-else$/)
+        .socketDelay(Imp.cfg.timeout.upstream + 1000)
+        .reply(200);
+
+      Imp.agent
+        .post('/login')
+        .send(Imp.VALID_CREDENTIALS)
+        .expect(200, (err) => {
+
+          nocker1.done();
+          if (err) done(err);
+
+          Imp.agent
+            .post('/anything-else')
+            .expect(504, (err) => {
+
+              nocker2.done();
+              if (err) done(err);
+
+              Imp.agent
+                .post('/logout')
+                .expect(200, (err) => {
+                  done(err);
+                });
+            });
+        });
+    });
   });
 });

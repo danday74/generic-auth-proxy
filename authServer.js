@@ -36,7 +36,9 @@ if (config.mockValidateUserEnabled) {
 }
 
 app.use('/', router);
-app.use('/', proxy(config.upstream));
+app.use('/', proxy(config.upstream, {
+  timeout: config.timeout.upstream
+}));
 
 const HTTP_PORT = config.httpPort;
 httpServer.listen(HTTP_PORT, () => {
