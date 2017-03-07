@@ -50,17 +50,6 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:51108/mb/jwt-decoder",
-			"request": {
-				"url": "http://localhost:51108/mb/jwt-decoder",
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"description": ""
-			},
-			"response": []
-		},
-		{
 			"name": "http://localhost:51108/mock-validate-user",
 			"request": {
 				"url": "http://localhost:51108/mock-validate-user",
@@ -83,7 +72,7 @@
 		{
 			"name": "http://localhost:51108/whoami",
 			"request": {
-				"url": "http://localhost:51108/authenticated",
+				"url": "http://localhost:51108/whoami",
 				"method": "GET",
 				"header": [],
 				"body": {},
