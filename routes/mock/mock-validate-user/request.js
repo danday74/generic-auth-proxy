@@ -1,5 +1,5 @@
-const validator = require('./validator');
 const users = require('./users');
+const validator = require('./validator');
 
 let route = router => {
   router.route('/mock-validate-user')
