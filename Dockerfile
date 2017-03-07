@@ -1,6 +1,6 @@
 # export IMAGE=registry.gitlab.com/danday74/auth-server
 # docker build -t ${IMAGE} .
-# docker run ???
+# docker run -d --name auth -p "51108:51108" -p "51109:51109" -v /etc/ssl/letsencrypt:/etc/ssl/letsencrypt ${IMAGE}
 # docker push ${IMAGE}
 
 FROM node:6.10.0
