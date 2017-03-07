@@ -10,9 +10,8 @@ EXPOSE 51109 # https
 ENV wd /usr/src/app
 ENV wds /usr/src/app/
 
-# RUN npm i -g yarn
-# RUN yarn global add pm2
-RUN npm i -g pm2
+RUN npm i -g yarn
+RUN yarn global add pm2
 
 RUN mkdir -p ${wd}
 WORKDIR ${wd}
@@ -26,9 +25,8 @@ COPY authServer.config.js ${wds}
 COPY authServer.js ${wds}
 COPY package.json ${wds}
 COPY pm2.yaml ${wds}
-# COPY yarn.lock ${wds}
+COPY yarn.lock ${wds}
 
-# RUN yarn install --prod
-RUN npm i --production
+RUN yarn install --prod
 
 CMD ["pm2-docker", "pm2.yaml"]
