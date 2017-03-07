@@ -1,3 +1,4 @@
+const moment = require('moment');
 const Imp = require(appRoot + '/routes/_classes/TestImports');
 
 describe('/logout', () => {
@@ -32,7 +33,11 @@ describe('/logout', () => {
               Imp.expect(jwtCookieObj).to.have.property('Max-Age', '0');
               Imp.expect(jwtCookieObj).to.have.property('Path', '/');
               Imp.expect(jwtCookieObj).to.have.property('Expires');
+
               Imp.expect(jwtCookieObj[Imp.cfg.jwt.cookieName]).to.be.empty;
+
+              let expires = moment(jwtCookieObj.Expires);
+              Imp.expect(expires).to.be.at.most(moment());
 
               Imp.expect(jwtCookieStr).to.contain('HttpOnly');
               if (res.request.protocol.includes('https')) {
