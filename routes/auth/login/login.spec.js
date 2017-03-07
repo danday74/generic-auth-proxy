@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const moment = require('moment');
 const badRequestObjs = require(appRoot + '/routes/_classes/badRequestObjs');
 const Imp = require(appRoot + '/routes/_classes/TestImports');
 
@@ -28,7 +29,15 @@ describe('/login', () => {
           Imp.expect(jwtCookieObj).to.have.property('Max-Age');
           Imp.expect(jwtCookieObj).to.have.property('Path', '/');
           Imp.expect(jwtCookieObj).to.have.property('Expires');
+
           Imp.expect(jwtCookieObj[Imp.cfg.jwt.cookieName]).to.not.be.empty;
+
+          let maxAge = +jwtCookieObj['Max-Age'];
+          Imp.expect(maxAge).to.eql(Imp.cfg.jwt.expiresIn);
+
+          let expires = moment(jwtCookieObj['Expires']);
+          Imp.expect(expires).to.be.at.least(moment().add(23, 'hours').add(59, 'minutes'));
+          Imp.expect(expires).to.be.at.most(moment().add(24, 'hours'));
 
           Imp.expect(jwtCookieStr).to.contain('HttpOnly');
           if (res.request.protocol.includes('https')) {

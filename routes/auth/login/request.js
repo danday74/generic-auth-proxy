@@ -29,7 +29,7 @@ let route = router => {
           expiresIn: config.jwt.expiresIn
         });
         res.cookie(config.jwt.cookieName, token, {
-          maxAge: config.jwt.expiresIn,
+          maxAge: config.jwt.expiresIn * 1000,
           httpOnly: true,
           secure: req.secure
         });

@@ -36,7 +36,8 @@ describe('/logout', () => {
 
               Imp.expect(jwtCookieObj[Imp.cfg.jwt.cookieName]).to.be.empty;
 
-              let expires = moment(jwtCookieObj.Expires);
+              let expires = moment(jwtCookieObj['Expires']);
+              Imp.expect(expires).to.be.at.least(moment().subtract(1, 'minutes'));
               Imp.expect(expires).to.be.at.most(moment());
 
               Imp.expect(jwtCookieStr).to.contain('HttpOnly');
