@@ -36,6 +36,7 @@ describe('/login', () => {
           Imp.expect(maxAge).to.eql(Imp.cfg.jwt.expiresIn);
 
           let expires = moment(jwtCookieObj['Expires']);
+          // noinspection JSCheckFunctionSignatures
           Imp.expect(expires).to.be.at.least(moment().add(23, 'hours').add(59, 'minutes'));
           Imp.expect(expires).to.be.at.most(moment().add(24, 'hours'));
 
