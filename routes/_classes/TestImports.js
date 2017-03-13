@@ -1,3 +1,5 @@
+const cfg = require(appRoot + '/authServer.config');
+
 // agent
 const supertest = require('supertest');
 const server = require(appRoot + '/authServer').https;
@@ -7,14 +9,14 @@ const agent = supertest.agent(server);
 const chai = require('chai');
 const expect = chai.expect;
 
-// others
-const cfg = require(appRoot + '/authServer.config');
+// 3rd party
 const cookie = require('cookie');
 const nock = require('nock')(new RegExp(cfg.nockHost));
 const nockUpstream = require('nock')(new RegExp(cfg.upstream.split(':')[1].replace('//', '')));
-const user = require(appRoot + '/test/utdata/auth/login/user.json');
 const using = require('data-driven');
 
+// custom
+const user = require(appRoot + '/test/utdata/auth/login/user.json');
 const VALID_USERNAME = 'alexxx';
 const VALID_PASSWORD = 'alexxx100';
 const VALID_CREDENTIALS = {
@@ -23,14 +25,14 @@ const VALID_CREDENTIALS = {
 };
 
 let TestImports = {
+  cfg,
   agent,
   expect,
-  cfg,
   cookie,
   nock,
   nockUpstream,
-  user,
   using,
+  user,
   VALID_USERNAME,
   VALID_PASSWORD,
   VALID_CREDENTIALS
