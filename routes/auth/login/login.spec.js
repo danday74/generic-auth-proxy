@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const moment = require('moment');
 const badRequestObjs = require(appRoot + '/routes/_classes/badRequestObjs');
 const Imp = require(appRoot + '/routes/_classes/TestImports');
+const restrictedUser = require(appRoot + '/test/utdata/auth/whoami/restrictedUser.json');
 
 describe('/login', () => {
 
@@ -16,7 +17,7 @@ describe('/login', () => {
       Imp.agent
         .post('/login')
         .send(Imp.VALID_CREDENTIALS)
-        .expect(200, (err, res) => {
+        .expect(200, restrictedUser, (err, res) => {
 
           nocker.done();
           if (err) done(err);
@@ -58,7 +59,7 @@ describe('/login', () => {
       Imp.agent
         .post('/login')
         .send(Imp.VALID_CREDENTIALS)
-        .expect(200, (err, res) => {
+        .expect(200, restrictedUser, (err, res) => {
 
           nocker.done();
           if (err) done(err);

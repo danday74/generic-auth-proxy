@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const rp = require('request-promise');
 const config = require(appRoot + '/authServer.config');
+const getRestrictedUser = require(appRoot + '/routes/_classes/getRestrictedUser');
 const validator = require('./validator');
 
 let route = router => {
@@ -34,7 +35,8 @@ let route = router => {
           secure: req.secure
         });
 
-        return res.sendStatus(response.statusCode);
+        let restrictedUser = getRestrictedUser(user);
+        return res.status(response.statusCode).json(restrictedUser);
 
       }).catch((err) => {
 
