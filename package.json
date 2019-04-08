@@ -1,7 +1,7 @@
 {
   "name": "auth-server",
   "version": "1.0.0",
-  "description": "JWT auth server",
+  "description": "A generic JWT authentication proxy",
   "author": "Daniel Lewis BSc(Hons)",
   "private": true,
   "scripts": {
