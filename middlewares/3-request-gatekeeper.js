@@ -1,27 +1,27 @@
-const jwt = require('jsonwebtoken');
-const config = require('../authServer.config');
+const jwt = require('jsonwebtoken')
+const config = require('../authServer.config')
 
-let middleware = (req, res, next) => {
+const middleware = (req, res, next) => {
   if (req.url === '/login' && req.method === 'POST') {
-    return next();
+    return next()
   }
   /* istanbul ignore next */
   if (req.url === '/mock-validate-user' && req.method === 'POST') {
-    return next();
+    return next()
   }
-  let token = req.cookies[config.jwt.cookieName];
+  const token = req.cookies[config.jwt.cookieName]
+
   if (!token) {
-    return res.sendStatus(401);
+    return res.sendStatus(401)
   }
 
-  jwt.verify(token, config.jwt.secret, (err /*, decoded*/) => {
+  jwt.verify(token, config.jwt.secret, err => {
     if (err) {
-      return res.sendStatus(401);
+      return res.sendStatus(401)
     } else {
-      // console.log(decoded);
-      return next();
+      return next()
     }
-  });
-};
+  })
+}
 
-module.exports = middleware;
+module.exports = middleware

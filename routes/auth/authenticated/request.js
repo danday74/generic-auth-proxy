@@ -1,10 +1,10 @@
-const validator = require('./validator');
+const validator = require('./validator')
 
-let route = router => {
+const route = router => {
   router.route('/authenticated')
     .get(validator, (req, res) => {
-      return res.sendStatus(200);
-    });
-};
+      return res.sendStatus(200)
+    })
+}
 
-module.exports = route;
+module.exports = route

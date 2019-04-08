@@ -1,3 +1,3 @@
-const validate = require('express-validation');
-let validator = {};
-module.exports = validate(validator);
+const validate = require('express-validation')
+const validator = {}
+module.exports = validate(validator)

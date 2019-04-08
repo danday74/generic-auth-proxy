@@ -1,7 +1,7 @@
-const config = require(appRoot + '/authServer.config');
-const validator = require('./validator');
+const config = require(appRoot + '/authServer.config')
+const validator = require('./validator')
 
-let route = router => {
+const route = router => {
   router.route('/logout')
     .post(validator, (req, res) => {
 
@@ -9,9 +9,9 @@ let route = router => {
         maxAge: 0,
         httpOnly: true,
         secure: req.secure
-      });
-      return res.sendStatus(200);
-    });
-};
+      })
+      return res.sendStatus(200)
+    })
+}
 
-module.exports = route;
+module.exports = route

@@ -1,12 +1,12 @@
-let getRestrictedUser = (user) => {
+const getRestrictedUser = user => {
 
-  let properties = ['username', 'email'];
+  const properties = ['username', 'email']
   return Object.keys(user)
     .filter(key => properties.includes(key))
     .reduce((obj, key) => {
-      obj[key] = user[key];
-      return obj;
-    }, {});
-};
+      obj[key] = user[key]
+      return obj
+    }, {})
+}
 
-module.exports = getRestrictedUser;
+module.exports = getRestrictedUser

@@ -1,4 +1,4 @@
-const Imp = require('./TestImports');
+const Imp = require('./TestImports')
 
 const badRequestObjs = [
   {
@@ -33,6 +33,6 @@ const badRequestObjs = [
     testName: 'password contains non alphanumeric chars',
     credentials: {username: Imp.VALID_USERNAME, password: 'ale-xxx100'}
   }
-];
+]
 
-module.exports = badRequestObjs;
+module.exports = badRequestObjs

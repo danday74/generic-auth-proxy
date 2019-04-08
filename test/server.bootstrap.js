@@ -1,1 +1,1 @@
-global.appRoot = require('app-root-path');
+global.appRoot = require('app-root-path')
