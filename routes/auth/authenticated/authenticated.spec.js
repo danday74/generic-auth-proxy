@@ -93,7 +93,7 @@ describe('/authenticated', () => {
         })
     })
 
-    it('should respond 401 where JWT cookie is invalid FAILING', done => {
+    it('should respond 401 where JWT cookie is invalid', done => {
 
       const server = require(appRoot + '/authServer').http
       const agent1 = supertest.agent(server)
